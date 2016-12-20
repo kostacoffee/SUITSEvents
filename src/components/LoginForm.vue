@@ -48,8 +48,14 @@ export default {
 
 			let payload = await response.json();
 			sessionStorage.setItem("token", payload.token);
-			$emit("loggedIn")
+			this.$emit("loggedIn")
 		}
+	},
+	mounted: function() {
+			// If page was refreshed or something, then dont bother logging in.
+			console.log("MOUNTED");
+			if (sessionStorage.getItem('token'))
+				this.$emit("loggedIn");
 	},
 	data () {
 		return {
