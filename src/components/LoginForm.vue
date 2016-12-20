@@ -27,27 +27,20 @@ export default {
 				pass: this.password
 			};
 
-			let response = null;
+			let payload = null;
 
 			try {
-				response = await fetch("https://api.suits.org.au/token", {
-					method: "POST",
-					body: JSON.stringify(data),
-					headers: {
-						'content-type': 'application/json'
-					},
-					mode: 'cors'
-				});
+				payload = await this.$http.post('https://api.suits.org.au/token', data);
 			}
 			catch (e) {
-				console.log(e);
+				payload = null;
+				// the request failed, do nothing for now :P
 			}
-			
-			if (!response.ok)
+
+			if (payload == null)
 				return;
 
-			let payload = await response.json();
-			sessionStorage.setItem("token", payload.token);
+			sessionStorage.setItem("token", payload.data.token);
 			this.$emit("loggedIn")
 		}
 	},
