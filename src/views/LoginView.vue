@@ -16,10 +16,6 @@ export default {
 			this.$router.push('/menu');
 		}
 	},
-	mounted: function () {
-		if (sessionStorage.getItem('token'))
-			this.redirectToMenu();
-	}
 }
 
 </script>
