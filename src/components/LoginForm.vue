@@ -30,7 +30,7 @@ export default {
 			let payload = null;
 
 			try {
-				payload = await this.$http.post('https://api.suits.org.au/token', data);
+				payload = await this.$http.post('/token', data);
 			}
 			catch (e) {
 				payload = null;
@@ -43,12 +43,6 @@ export default {
 			sessionStorage.setItem("token", payload.data.token);
 			this.$emit("loggedIn")
 		}
-	},
-	mounted: function() {
-			// If page was refreshed or something, then dont bother logging in.
-			console.log("MOUNTED");
-			if (sessionStorage.getItem('token'))
-				this.$emit("loggedIn");
 	},
 	data () {
 		return {

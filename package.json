@@ -7,10 +7,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --host 0.0.0.0 --inline --hot --content-base src/",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules && cp src/index.html public/."
   },
-  "dependencies": {
-    "axios": "^0.15.3",
-    "socket.io-client": "^1.7.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",

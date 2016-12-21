@@ -5,11 +5,16 @@ import 'vue-material/dist/vue-material.css'
 import axios from 'axios'
 import VueRouter from 'vue-router'
 import router from './routes'
+import config from './config'
 
 Vue.use(VueMaterial);
 Vue.use(VueRouter);
 
-Vue.prototype.$http = axios;
+let $http = axios.create({
+	baseURL: config.apiURL
+});
+
+Vue.prototype.$http = $http;
 
 Vue.material.theme.register('default', {
   primary: 'indigo',
