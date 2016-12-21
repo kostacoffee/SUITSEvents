@@ -1,3 +1,3 @@
 export default {
-	apiURL: 'http://localhost:3000'
+	apiURL: 'https://api.suits.org.au/'
 }

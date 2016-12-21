@@ -15,13 +15,26 @@ export default {
 	},
 	mounted: async function () {
 		let payload = await this.$http.get('/events');
-		console.log(this.$http.defaults);
 		this.events = payload.data;
 		this.socket.on("newEvent", this.addEvent);
+		this.socket.on("updateEvent", this.updateEvent);
+		this.socket.on("deleteEvent", this.deleteEvent);
 	},
 	methods: {
 		addEvent: function(eventData) {
 			this.events.push(eventData);
+		},
+		updateEvent: function(eventData) {
+			for (let i = 0; i < this.events.length; i++) {
+				if (this.events[i].id == eventData.id)
+					this.events.splice(i, 1, eventData); // a[i] = b doesn't update
+			}
+		},
+		deleteEvent: function(eventData) {
+			for (let i = 0; i < this.events.length; i++) {
+				if (this.events[i].id == eventData.id)
+					this.events.splice(i, 1);
+			}
 		}
 	}
 }
