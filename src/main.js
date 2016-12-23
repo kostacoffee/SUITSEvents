@@ -16,10 +16,6 @@ let $http = axios.create({
 
 Vue.prototype.$http = $http;
 
-Vue.material.theme.register('default', {
-  primary: 'indigo',
-  accent: 'pink'
-});
 
 new Vue({
   el: '#app',

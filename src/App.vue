@@ -1,5 +1,5 @@
 <template lang="pug">
-div#app(v-md-theme="'default'")
+div#app
 	router-view
 </template>
 
@@ -21,7 +21,8 @@ export default {
 
 <style lang="sass">
 
-body
+#app
 	background-color: #f5f5f5
+	height: 100%
 
 </style>
