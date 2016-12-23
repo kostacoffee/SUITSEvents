@@ -6,7 +6,7 @@ div#event-menu
 			md-icon add
 			md-tooltip(direction="bottom") Add Event
 	add-event-dialog(ref="add-event-dialog")
-	event-list(:socket="socket")
+	event-list.event-list(:socket="socket")
 </template>
 
 <script>
@@ -50,5 +50,8 @@ export default {
 	position: absolute
 	right: 16px
 	top: 30px
+
+.event-list
+	margin: 30px!important
 
 </style>

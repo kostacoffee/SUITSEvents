@@ -1,7 +1,7 @@
 <template lang="pug">
-div#event-list
-	ul
-		li(v-for="event in events") {{event}}
+md-layout(md-gutter)
+	md-layout.event-item(v-for="event in events")
+		event-card.event(:event="event", @click.native="viewEvent(event.id)")
 </template>
 
 <script>
@@ -35,12 +35,29 @@ export default {
 				if (this.events[i].id == eventData.id)
 					this.events.splice(i, 1);
 			}
+		},
+		viewEvent (eventId) {
+			this.$router.push('/event/' + eventId);
+		}
+	},
+	components: {
+		'event-card': function (resolve) {
+			require(['./EventCard.vue'], resolve);
 		}
 	}
 }
 </script>
 
 <style lang="sass">
+
+.event
+	width: 200px
+	height: 150px
+	margin-top: 15px
+	margin-bottom: 15px
+
+.event-item
+	flex: 0
 
 </style>
 
