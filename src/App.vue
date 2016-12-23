@@ -8,11 +8,6 @@ import 'babel-polyfill';
 
 export default {
 	name: 'app',
-	methods: {
-		redirectToMenu: function () {
-			this.$router.push("/menu");
-		}
-	},
 	data () {
 		return {}
 	}

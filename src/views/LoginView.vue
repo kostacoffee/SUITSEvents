@@ -1,6 +1,6 @@
 <template lang="pug">
 	div.container
-		login-form(v-on:loggedIn="redirectToMenu")
+		login-form(v-on:loggedIn="$router.push('/')")
 </template>
 
 <script>
@@ -10,12 +10,7 @@ export default {
 	name: 'login-view',
 	components: {
 		'login-form': LoginForm
-	},
-	methods: {
-		redirectToMenu: function () {
-			this.$router.push('/menu');
-		}
-	},
+	}
 }
 
 </script>

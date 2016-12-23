@@ -55,6 +55,10 @@ export default {
 	height: 150px
 	margin-top: 15px
 	margin-bottom: 15px
+	transition: box-shadow 0.25s
+
+.event:hover
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
 .event-item
 	flex: 0

@@ -6,27 +6,28 @@ let view = function (name) {
 	};
 };
 
-let tokenRequired = function (to, from, next) {
-	if (!sessionStorage.getItem('token'))
-		next('/login');
-	else
-		next();
-};
-
 const routes = [
-	{ path: '/login', component: view('LoginView'),
-		beforeEnter: function (to, from, next) {
-			if (sessionStorage.getItem('token'))
-				next('/menu');
-			else
-				next();
-		}
-	},
-	{ path: '/menu', component: view('EventMenu'), beforeEnter: tokenRequired },
-	{ path: '/', redirect: '/login' }
+	{ path: '/login', component: view('LoginView') },
+	{ path: '/', component: view('EventMenu') }
 ];
 
-
 const router = new VueRouter({routes});
+
+router.beforeEach((to, from, next) => {
+	let token = sessionStorage.getItem('token');
+	if (to.path == '/login') {
+		//login path is publically accessible, but if already logged in, go away
+		if (token)
+			next('/'); // if logged in, don't log in again
+		else
+			next();
+	}
+	else {
+		if (token)
+			next();
+		else
+			next('/login'); // If you're not logged in, go log in
+	}
+});
 
 export default router
