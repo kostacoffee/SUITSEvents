@@ -8,7 +8,19 @@ let view = function (name) {
 
 const routes = [
 	{ path: '/login', component: view('LoginView') },
-	{ path: '/', component: view('EventMenu') }
+	{ 
+		path: '/', component: view('Base'),
+		children: [
+			{
+				path: '',
+				component: view('EventMenu')
+			},
+			{
+				path: '/event/:id',
+				component: view('EventView')
+			}
+		]
+	}
 ];
 
 const router = new VueRouter({routes});
