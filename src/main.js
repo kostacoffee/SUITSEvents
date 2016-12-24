@@ -16,7 +16,6 @@ let $http = axios.create({
 
 Vue.prototype.$http = $http;
 
-
 new Vue({
   el: '#app',
   render: h => h(App),

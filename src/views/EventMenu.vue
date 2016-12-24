@@ -4,14 +4,13 @@ div#event-menu
 			md-icon add
 			md-tooltip(direction="bottom") Add Event
 	add-event-dialog(ref="add-event-dialog")
-	event-list.event-list(:socket="socket")
+	event-list
 
 </template>
 
 <script>
 export default {
 	name: "event-menu",
-	props: ['socket'],
 	components: {
 		'event-list': function(resolve) {
 			require(['../components/EventList.vue'], resolve)
@@ -36,9 +35,5 @@ export default {
 	right: 16px
 	top: 29px
 	z-index: 99
-
-.event-list
-	margin: 30px!important
-
 
 </style>

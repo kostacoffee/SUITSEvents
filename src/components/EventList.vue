@@ -5,9 +5,10 @@ md-layout(md-gutter)
 </template>
 
 <script>
+import {socket} from '../socket'
+
 export default {
 	name: "event-list",
-	props: ['socket'],
 	data() {
 		return {
 			events: []
@@ -16,9 +17,9 @@ export default {
 	mounted: async function () {
 		let payload = await this.$http.get('/events');
 		this.events = payload.data;
-		this.socket.on("newEvent", this.addEvent);
-		this.socket.on("updateEvent", this.updateEvent);
-		this.socket.on("deleteEvent", this.deleteEvent);
+		socket.on("newEvent", this.addEvent);
+		socket.on("updateEvent", this.updateEvent);
+		socket.on("deleteEvent", this.deleteEvent);
 	},
 	methods: {
 		addEvent: function(eventData) {
