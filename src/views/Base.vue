@@ -8,12 +8,13 @@ div
 
 <script>
 import {createSocket} from '../socket';
+import $http from '../http';
 
 export default {
 	name: "base",
 	mounted: function() {
 		let token = sessionStorage.getItem('token');
-		this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+		$http.defaults.headers.common['Authorization'] = "Bearer " + token;
 		createSocket(token)
 	}
 

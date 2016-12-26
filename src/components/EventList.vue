@@ -6,6 +6,7 @@ md-layout(md-gutter)
 
 <script>
 import {socket} from '../socket'
+import $http from '../http';
 
 export default {
 	name: "event-list",
@@ -15,7 +16,7 @@ export default {
 		}
 	},
 	mounted: async function () {
-		let payload = await this.$http.get('/events');
+		let payload = await $http.get('/events');
 		this.events = payload.data;
 		socket.on("newEvent", this.addEvent);
 		socket.on("updateEvent", this.updateEvent);

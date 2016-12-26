@@ -18,6 +18,8 @@ md-card.login-card
 </template>
 
 <script>
+import $http from "../http";
+
 export default {
 	name: 'login-form',
 	methods: {
@@ -30,7 +32,7 @@ export default {
 			let payload = null;
 
 			try {
-				payload = await this.$http.post('/token', data);
+				payload = await $http.post('/token', data);
 			}
 			catch (e) {
 				payload = null;

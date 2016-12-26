@@ -23,6 +23,8 @@ md-dialog(ref="add-event-dialog")
 </template>
 
 <script>
+import $http from '../http';
+
 export default {
 	name: 'add-event-dialog',
 	data () {
@@ -43,7 +45,7 @@ export default {
 			let resp = null;
 
 			try {
-				resp = await this.$http.post('/events', data);
+				resp = await $http.post('/events', data);
 			}
 			catch (e) {
 				resp = null;

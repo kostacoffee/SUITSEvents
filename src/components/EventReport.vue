@@ -12,7 +12,7 @@ md-card
 	md-card-actions
 		div.summary
 			md-icon.people-icon people
-			label {{attendees.length}}
+			label {{attendance.length}}
 
 		md-button.md-icon-button
 			md-icon file_download
@@ -25,13 +25,7 @@ import socket from '../socket';
 
 export default {
 	name: 'event-report',
-	props: ['event'],
-	data () {
-		return {
-			members: [],
-			attendees: [{firstName: "Kosta"}, {firstName: "Deanna"}]
-		}
-	}
+	props: ['event', 'members', 'attendance'],
 }
 </script>
 

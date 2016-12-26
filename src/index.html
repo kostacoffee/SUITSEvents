@@ -9,5 +9,10 @@
 	<body style="background-color:#f5f5f5">
 		<div id="app"></div>
 		<script src="/assets/main.js"></script>
+		<script>
+			window.onbeforeunload = function () {
+				return "Please don't refresh. Everything might break";
+			}
+		</script>
 	</body>
 </html>
