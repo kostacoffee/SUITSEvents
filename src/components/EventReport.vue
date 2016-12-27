@@ -6,13 +6,13 @@ md-card
 	
 	md-card-content
 		md-list
-			md-list-item(v-for="person in attendees")
-				span {{person.firstName}} {{person.lastName}}
+			md-list-item(v-for="a in attendance")
+				span {{a.member.firstName}} {{a.member.lastName}}
 	
 	md-card-actions
 		div.summary
 			md-icon.people-icon people
-			label {{attendance.length}}
+			label {{numAttendees}}
 
 		md-button.md-icon-button
 			md-icon file_download
@@ -26,6 +26,11 @@ import socket from '../socket';
 export default {
 	name: 'event-report',
 	props: ['event', 'members', 'attendance'],
+	computed: {
+		numAttendees() {
+			return Object.keys(this.attendance).length;
+		}
+	}
 }
 </script>
 

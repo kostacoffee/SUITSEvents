@@ -6,8 +6,7 @@ md-layout(md-gutter)
 		event-attendance(:event="event", :members="members", :attendance="attendance")
 	md-layout(md-column)
 		//add-attendee-form
-		div C
-</template>
+		div C </template>
 
 <script>
 import $http from '../http';
@@ -18,8 +17,8 @@ export default {
 	data () {
 		return {
 			event: {},
-			members: [],
-			attendance: []
+			members: {},
+			attendance: {}
 		}
 	},
 	components: {
@@ -31,26 +30,29 @@ export default {
 		}
 	},
 	mounted: async function () {
-		let eventP = $http.get("/events/"+this.$route.params.id);
-		let memberP = $http.get("/members");
-		let attP = $http.get("/events/"+this.$route.params.id+"/attendance");
+		this.members = await $http.getMembers();
+		let eventP = $http.getEvent(this.$route.params.id);
+		let attP = $http.getEventAttendance(this.$route.params.id, this.members);
 
-		this.event = (await eventP).data;
-		this.members = (await memberP).data;
-		this.attendance = (await attP).data;
-
-		socket.on("newMember", this.addMember);
+		this.event = await eventP;
+		this.attendance = await attP;
+		socket.on("newMember", this.updateMember);
 		socket.on("updateMember", this.updateMember);
+		socket.on("newAttendance", this.updateAttendance);
+		socket.on("updateAttendance", this.updateAttendance);
+		socket.on("deleteAttendance", this.deleteAttendance);
 	},
 	methods: {
-		addMember(data) {
-			this.members.push(data);
-		},
 		updateMember(data) {
-			for (let i = 0; i < this.members.length; i++) {
-				if (this.members[i].id == data.id)
-					this.members.splice(i, 1, data);
-			}
+			this.members[data.id] = data;
+			this.attendance[data.id].member = data; // updating the attendance record
+		},
+		updateAttendance(data) {
+			this.attendance[data.memberId] = {
+				id: data.id,
+				member: this.members[data.memberId],
+				data: data.data
+			};
 		}
 	}
 }

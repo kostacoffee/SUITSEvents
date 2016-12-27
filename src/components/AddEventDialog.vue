@@ -42,14 +42,7 @@ export default {
 				time: this.time
 			};
 
-			let resp = null;
-
-			try {
-				resp = await $http.post('/events', data);
-			}
-			catch (e) {
-				resp = null;
-			}
+			let resp = await $http.addEvent(data);
 
 			if (resp == null)
 				return;

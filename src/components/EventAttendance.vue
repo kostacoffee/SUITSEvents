@@ -30,31 +30,27 @@ export default {
 	props: ['event', 'members', 'attendance'],
 	data () {
 		return {
-			search: '',
-			filteredMembers: []
+			search: ''
 		}
 	},
 	methods: {
-		attended (id) {
-			for (let i = 0; i < this.attendance.length; i++) {
-				if (this.attendance[i].memberId == id && this.attendance[i].data[type])
-					return true;
-			}
-			return false;
+		attended(id, field) {
+			return this.attendance[id] && this.attendance[id].data[field];
 		}
 	},
-	watch: {
-		search () {
+	computed: {
+		 filteredMembers () {
 			let query = this.search.toLowerCase();
-			this.filteredMembers = this.members.filter((mem) => {
-				return mem.firstName.toLowerCase().includes(query) ||
-						mem.lastName.toLowerCase().includes(query);
-			});
+			let filteredMembers = [];
+			for (let id in this.members) {
+				let mem = this.members[id];
+				if (mem.firstName.toLowerCase().includes(query) ||
+					mem.lastName.toLowerCase().includes(query)) {
+					filteredMembers.push(mem);
+				}
+			}
+			return filteredMembers;
 		}
-	},
-	mounted () {
-		console.log(this.members);
-		this.filteredMembers = this.members;
 	}
 }
 </script>

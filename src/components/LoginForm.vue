@@ -29,20 +29,11 @@ export default {
 				pass: this.password
 			};
 
-			let payload = null;
+			let resp = $http.auth(data);
 
-			try {
-				payload = await $http.post('/token', data);
-			}
-			catch (e) {
-				payload = null;
-				// the request failed, do nothing for now :P
-			}
+			if (resp == null)
+				return; // auth failed
 
-			if (payload == null)
-				return;
-
-			sessionStorage.setItem("token", payload.data.token);
 			this.$emit("loggedIn")
 		}
 	},

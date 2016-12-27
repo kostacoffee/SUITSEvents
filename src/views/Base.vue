@@ -14,7 +14,6 @@ export default {
 	name: "base",
 	mounted: function() {
 		let token = sessionStorage.getItem('token');
-		$http.defaults.headers.common['Authorization'] = "Bearer " + token;
 		createSocket(token)
 	}
 

@@ -1,7 +1,7 @@
 <template lang="pug">
 md-layout(md-gutter)
 	md-layout.event-item(v-for="event in events")
-		event-card.event(:event="event", @click.native="viewEvent(event.id)")
+		event-card.event(:event="event", @click.native="$router.push('/event/'+event.id)")
 </template>
 
 <script>
@@ -16,30 +16,17 @@ export default {
 		}
 	},
 	mounted: async function () {
-		let payload = await $http.get('/events');
-		this.events = payload.data;
-		socket.on("newEvent", this.addEvent);
+		this.events = await $http.getEventList();
+		socket.on("newEvent", this.updateEvent);
 		socket.on("updateEvent", this.updateEvent);
 		socket.on("deleteEvent", this.deleteEvent);
 	},
 	methods: {
-		addEvent: function(eventData) {
-			this.events.push(eventData);
-		},
 		updateEvent: function(eventData) {
-			for (let i = 0; i < this.events.length; i++) {
-				if (this.events[i].id == eventData.id)
-					this.events.splice(i, 1, eventData); // a[i] = b doesn't update
-			}
+			this.events[eventData.id] = eventData;
 		},
 		deleteEvent: function(eventData) {
-			for (let i = 0; i < this.events.length; i++) {
-				if (this.events[i].id == eventData.id)
-					this.events.splice(i, 1);
-			}
-		},
-		viewEvent (eventId) {
-			this.$router.push('/event/' + eventId);
+			delete this.events[eventData.id];
 		}
 	},
 	components: {
