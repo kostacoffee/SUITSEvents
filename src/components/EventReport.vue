@@ -5,7 +5,7 @@ md-card
 		h2.md-subheading {{event.title}} - {{event.time}}
 	
 	md-card-content
-		md-list
+		md-list.list
 			md-list-item(v-for="a in attendance")
 				span {{a.member.firstName}} {{a.member.lastName}}
 	
@@ -42,5 +42,9 @@ export default {
 
 .people-icon
 	margin-right: 3px
+
+.list
+	max-height: 60vh
+	overflow: scroll
 
 </style>
