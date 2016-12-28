@@ -82,6 +82,16 @@ export default {
 		}
 
 		return expandedAttendance;
+	},
+	async addAttendance(eventId, memberId, data) {
+		return await response($http.put('/events/'+eventId+'/attendance/'+memberId, data));
+	},
+
+	async addUnregMember(data) {
+		let resp = await response($http.post('/members', data));
+		if (resp == null)
+			return null
+		return resp.data.id;
 	}
 };
 

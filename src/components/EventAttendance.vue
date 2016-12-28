@@ -7,7 +7,7 @@ div
 	md-card
 		md-card-content
 			md-list
-				md-list-item.md-double-line(v-for="mem in filteredMembers", @click.native="$emit('changedMember', mem)")
+				md-list-item.md-double-line(v-for="mem in filteredMembers", @click.native="$emit('changedMember', mem.id)")
 					div.md-list-text-container
 						span {{mem.firstName}} {{mem.lastName}}
 
@@ -44,8 +44,8 @@ export default {
 			let filteredMembers = [];
 			for (let id in this.members) {
 				let mem = this.members[id];
-				if (mem.firstName.toLowerCase().includes(query) ||
-					mem.lastName.toLowerCase().includes(query)) {
+				if ((mem.firstName && mem.firstName.toLowerCase().includes(query)) ||
+					(mem.lastName && mem.lastName.toLowerCase().includes(query))) {
 					filteredMembers.push(mem);
 				}
 			}
