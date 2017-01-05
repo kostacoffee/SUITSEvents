@@ -7,15 +7,15 @@ md-card
 		md-card-content
 			md-input-container
 				label First Name
-				md-input(v-model="firstName")
+				md-input(v-model="firstName", required)
 
 			md-input-container
 				label Last Name
-				md-input(v-model="lastName")
+				md-input(v-model="lastName", required)
 
 			md-input-container
 				label Access
-				md-input(v-model="access")
+				md-input(v-model="access", required)
 
 		md-card-actions
 			md-button(type="submit") Submit
