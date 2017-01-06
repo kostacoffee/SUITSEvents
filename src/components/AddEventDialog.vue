@@ -29,9 +29,9 @@ export default {
 	name: 'add-event-dialog',
 	data () {
 		return {
-			title: null,
-			desc: null,
-			time: null
+			title: "",
+			desc: "",
+			time: ""
 		}
 	},
 	methods: {
@@ -48,9 +48,9 @@ export default {
 				return;
 			
 			//reset fields
-			this.title = null;
-			this.desc = null;
-			this.time = null;
+			this.title = "";
+			this.desc = "";
+			this.time = "";
 
 			this.closeDialog('add-event-dialog');
 		},

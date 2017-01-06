@@ -1,7 +1,11 @@
 <template lang="pug">
-md-layout(md-gutter)
-	md-layout.event-item(v-for="event in events")
-		event-card.event(:event="event", @click.native="$router.push('/event/'+event.id)")
+div
+	md-input-container.event-search
+		label Search
+		md-input(v-model="query")
+	md-layout(md-gutter)
+		md-layout.event-item(v-for="event in filteredEvents")
+			event-card.event(:event="event", @click.native="$router.push('/event/'+event.id)")
 </template>
 
 <script>
@@ -12,7 +16,8 @@ export default {
 	name: "event-list",
 	data() {
 		return {
-			events: []
+			events: [],
+			query: ""
 		}
 	},
 	mounted: async function () {
@@ -33,6 +38,21 @@ export default {
 		'event-card': function (resolve) {
 			require(['./EventCard.vue'], resolve);
 		}
+	},
+	computed: {
+		filteredEvents () {
+			let filtered = {};
+			let q = this.query.toLowerCase();
+
+			for (let key in this.events) {
+				if (this.events[key].title.toLowerCase().includes(q) ||
+				this.events[key].desc.toLowerCase().includes(q) ||
+				this.events[key].time.toLowerCase().includes(q))
+					filtered[key] = this.events[key]
+			}
+
+			return filtered;
+		}
 	}
 }
 </script>
@@ -51,6 +71,13 @@ export default {
 
 .event-item
 	flex: 0
+
+.event-search
+	margin-left: auto
+	margin-right: auto
+	margin-top: 10px
+	margin-bottom: 10px
+	width: 50%
 
 </style>
 
