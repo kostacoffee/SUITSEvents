@@ -15,7 +15,7 @@ md-card
 
 			md-input-container
 				label Access
-				md-input(v-model="access", required)
+				md-input(v-model="access", type="number")
 
 		md-card-actions
 			md-button(type="submit") Submit

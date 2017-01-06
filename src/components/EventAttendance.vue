@@ -15,10 +15,7 @@ div
 							md-icon(v-if="!mem.registered") person_outline
 						span(v-else) NO ACCESS
 
-					div
-						md-icon(v-if="attended(mem.id, 'additional')") info_outline
-						md-icon(v-if="attended(mem.id, 'drink')") add_circle_outline
-						md-icon(v-if="attended(mem.id, 'bbq')") check
+					md-icon(v-if="attended(mem.id, 'bbq')") check
 
 </template>
 

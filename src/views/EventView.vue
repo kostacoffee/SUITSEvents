@@ -5,7 +5,7 @@ md-layout(md-gutter)
 	md-layout(md-column)
 		event-attendance(:event="event", :members="members", :attendance="attendance", @changedMember="changeMemAttendance")
 	md-layout(md-column)
-		attendance-form.att-form(:memAttendance="memAttendance", @addAttendance="addAttendance")
+		attendance-form.att-form(:memAttendance="memAttendance", @addAttendance="addAttendance", @deleteAttendance="deleteAtt")
 		new-attendee-form.new-att-form(@newAttendee="newAttendee")
 </template>
 
@@ -57,7 +57,8 @@ export default {
 		},
 		updateMember(data) {
 			this.members[data.id] = data;
-			this.attendance[data.id].member = data; // updating the attendance record
+			if (this.attendance[data.id])
+				this.attendance[data.id].member = data; // updating the attendance record
 		},
 		newAttendance(data) {
 			let attData = {
@@ -106,6 +107,17 @@ export default {
 
 			if (memberId != null)
 				this.changeMemAttendance(memberId);
+		},
+
+		async deleteAttendance(data) {
+			if (this.$route.params.id != data.eventId)
+				return;
+			
+			this.$delete(this.attendance, data.memberId);
+		},
+
+		async deleteAtt(memId) {
+			let resp = await $http.deleteAttendance(this.$route.params.id, memId);
 		}
 	}
 }

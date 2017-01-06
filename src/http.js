@@ -92,6 +92,14 @@ export default {
 		if (resp == null)
 			return null
 		return resp.data.id;
+	},
+
+	async deleteAttendance(eventId, memId) {
+		let resp = await response($http.delete('/events/'+eventId+'/attendance/'+memId));
+		if (resp == null)
+			return null;
+		return resp;
 	}
+
 };
 

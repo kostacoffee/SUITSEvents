@@ -1,6 +1,6 @@
 <template lang="pug">
 md-card
-	form(@submit.prevent="$emit('addAttendance', memAttendance.member.id, memAttendance.data)")
+	form(@submit.prevent="changeAttendance")
 		md-card-header
 			h1.md-title Attendance
 			h2.md-subheading(v-if="memAttendance != null") {{memAttendance.member.firstName}} {{memAttendance.member.lastName}}
@@ -22,7 +22,21 @@ import $http from '../http';
 
 export default {
 	name: 'attendance-form',
-	props: ['memAttendance']
+	props: ['memAttendance'],
+	methods: {
+		changeAttendance() {
+			let adding = false;
+
+			for (let key in this.memAttendance.data)
+				adding = adding || this.memAttendance.data[key];
+			
+			
+			if (adding)
+				this.$emit('addAttendance', this.memAttendance.member.id, this.memAttendance.data);
+			else
+				this.$emit('deleteAttendance', this.memAttendance.member.id);
+		}
+	}
 }
 </script>
 
