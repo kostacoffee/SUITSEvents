@@ -99,6 +99,15 @@ export default {
 		if (resp == null)
 			return null;
 		return resp;
+	},
+
+	async deleteEvent(eventId) {
+		let resp = await response($http.delete('/events/'+eventId));
+
+		if (resp == null)
+			return null
+
+		return resp;
 	}
 
 };

@@ -5,7 +5,7 @@ div
 		md-input(v-model="query")
 	md-layout(md-gutter)
 		md-layout.event-item(v-for="event in filteredEvents")
-			event-card.event(:event="event", @click.native="$router.push('/event/'+event.id)")
+			event-card.event(:event="event", @openEvent="openEvent", @deleteEvent="")
 </template>
 
 <script>
@@ -16,22 +16,29 @@ export default {
 	name: "event-list",
 	data() {
 		return {
-			events: [],
-			query: ""
+			events: {},
+			query: "",
+			eventIdToDelete: {}
 		}
 	},
 	mounted: async function () {
 		this.events = await $http.getEventList();
-		socket.on("newEvent", this.updateEvent);
+		socket.on("newEvent", this.newEvent);
 		socket.on("updateEvent", this.updateEvent);
 		socket.on("deleteEvent", this.deleteEvent);
 	},
 	methods: {
+		newEvent (eventData) {
+			this.$set(this.events, eventData.id, eventData);
+		},
 		updateEvent: function(eventData) {
 			this.events[eventData.id] = eventData;
 		},
-		deleteEvent: function(eventData) {
-			delete this.events[eventData.id];
+		deleteEvent (eventData) {
+			this.$delete(this.events, eventData.id);
+		},
+		openEvent (eventId, domEvent) {
+			this.$router.push('/event/'+eventId)
 		}
 	},
 	components: {
@@ -52,7 +59,7 @@ export default {
 			}
 
 			return filtered;
-		}
+		},
 	}
 }
 </script>

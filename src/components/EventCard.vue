@@ -1,11 +1,16 @@
 <template lang="pug">
-md-card.event
+md-card.event-card(@click.native="$emit('openEvent', event.id, $event)")
 	md-card-header
 		h1.md-title {{event.title}}
 
 	md-card-content
 		h2.md-subheading {{event.desc}}
 		label {{event.time}}
+	
+	md-card-actions
+		md-button.md-icon-button(@click.stop="$emit('deleteEvent', event.id)")
+			md-icon delete
+
 
 </template>
 
@@ -19,7 +24,7 @@ export default {
 
 <style lang="sass">
 
-.event
+.event-card
 	overflow: hidden
 
 </style>
