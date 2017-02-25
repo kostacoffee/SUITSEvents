@@ -29,7 +29,7 @@ export default {
 				pass: this.password
 			};
 
-			let resp = $http.auth(data);
+			let resp = await $http.auth(data);
 
 			if (resp == null)
 				return; // auth failed
