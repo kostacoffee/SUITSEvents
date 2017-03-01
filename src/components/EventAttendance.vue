@@ -46,6 +46,7 @@ export default {
 					filteredMembers.push(mem);
 				}
 			}
+			filteredMembers = filteredMembers.slice(0,10); // only show first 10 to minimise rendering times
 			return filteredMembers;
 		}
 	}
