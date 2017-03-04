@@ -35,7 +35,7 @@ md-card
 			md-icon.people-icon attach_money
 			label {{profit}}
 
-		md-button.md-icon-button
+		md-button.md-icon-button(@click.stop="downloadAttendees")
 			md-icon file_download
 
 
@@ -76,6 +76,41 @@ export default {
 	methods: {
 		attended(id, field) {
 			return this.attendance[id] && this.attendance[id].data[field];
+		},
+		downloadAttendees() {
+			let output = "firstName,lastName,access,bbq,drink\n";
+			for (let id in this.attendance){
+				let member = this.members[id];
+				let data = this.attendance[id].data;
+				output += [member.firstName, member.lastName, member.access, data.bbq, data.drink].join(',') + '\n';
+			}
+
+			let attendanceIds = Object.keys(this.attendance);
+			let accessIds = attendanceIds.filter(key => this.members[key].access);
+			let nonaccessIds = attendanceIds.filter(key => !this.members[key].access);
+			output += '\n';
+			output += 'Total attendees:,' + attendanceIds.length + '\n';
+			output += 'Total profit:,' + this.profit + '\n';
+
+			output += 'Access attendees:,' + accessIds.length + '\n';
+			output += 'Non-access attendees:,' + nonaccessIds.length + '\n';
+
+			output += 'Access BBQs:,' + accessIds.filter(id => this.attendance[id].data.bbq).length + '\n';
+			output += 'Non-Access BBQs:,' + nonaccessIds.filter(id => this.attendance[id].data.bbq).length + '\n';
+
+			output += 'Drinks:,' + attendanceIds.filter(id => this.attendance[id].data.drink).length + '\n';
+			
+			let outputBlob = new Blob([output], {type:'text/csv'});
+
+			let downloadLink = document.createElement('a');
+			document.body.appendChild(downloadLink);
+			downloadLink.style = 'display: none;';
+			let dataUrl = window.URL.createObjectURL(outputBlob);
+			downloadLink.href = dataUrl;
+			downloadLink.download = this.event.title+'-attendance.csv';
+			downloadLink.click();
+			downloadLink.remove();
+
 		}
 	}
 }
