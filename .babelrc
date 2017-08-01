@@ -1,5 +1,19 @@
 {
-  "presets": [
-    ["latest", { "modules": false }]
-  ]
+    "presets": [
+        [
+            "latest", {
+                "es2015": {
+                    "modules": false
+                }
+            }
+        ],
+        "react"
+    ],
+    "plugins": [
+        "react-hot-loader/babel",
+        [
+            "import", { "libraryName": "antd", "style": "css" }
+        ],
+        "transform-object-rest-spread"
+    ]
 }

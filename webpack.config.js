@@ -1,78 +1,59 @@
-var path = require('path')
-var webpack = require('webpack')
+const webpack = require('webpack')
+const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
-  entry: './src/main.js',
-  output: {
-    path: path.resolve(__dirname, 'public/assets'),
-    publicPath: '/assets/',
-    filename: 'main.js'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-		options: {
-			loaders: {
-				sass: 'style-loader!css-loader!sass-loader?indentedSyntax',
-				html: 'pug?doctype=html'
-			}
-		}
-      },
-	  {
-	  	test: /\.css$/,
-		loader: 'style-loader!css-loader'
-	  },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.svg$/,
-        loader: 'file-loader',
-		options: {
-			name: '[name].[ext]'
-		}
-      },
-	  {
-	  	test: /^index.html$/,
-		loader: 'file-loader',
-		options: {
-			name: 'index.html'
-		}
-	  }
+module.exports =
+
+{
+    devtool: 'source-map',
+    entry: {
+        'app': [
+          'babel-polyfill',
+          'react-hot-loader/patch',
+          './src/index.js'
+        ]
+    },
+    output: {
+        path: path.resolve(__dirname, './dist'),
+        filename: '[name].js'
+    },
+    module: {
+        rules: [
+            { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
+            { test: /\.css$/, include: /node_modules/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader',
+                })
+           },
+           { test: /\.css$/, exclude: /node_modules/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            query: {
+                                modules: true,
+                                localIdentName: '[name]__[local]___[hash:base64:5]'
+                            }
+                        }
+                    ]
+                })
+            },
+        ]
+
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+        modules: [
+            "screens",
+            "App",
+            "node_modules",
+            path.resolve(__dirname, 'src')
+        ]
+
+    },
+    plugins: [
+        new ExtractTextPlugin("style.css")
     ]
-  },
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue'
-    }
-  },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true
-  },
-  devtool: '#eval-source-map',
-}
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
-  ])
 }
