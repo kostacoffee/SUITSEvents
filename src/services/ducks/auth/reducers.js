@@ -3,7 +3,7 @@ import types from './types';
 
 const initialState = {
     loading: false,
-    token: '',
+    token: sessionStorage.getItem('token'),
     error: ''
 }
 

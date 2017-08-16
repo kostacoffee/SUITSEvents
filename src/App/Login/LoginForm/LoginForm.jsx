@@ -3,8 +3,8 @@ import { Form, Icon, Button, Input } from 'antd';
 import { LocalForm, Control } from 'react-redux-form';
 import style from './style.css';
 
-const LoginForm = ({doLogin, hasLoginFailed, errorMsg, isLoading}) => {
-    return (
+const LoginForm = ({doLogin, hasLoginFailed, errorMsg, isLoading}) => (
+
         <LocalForm component={Form} onSubmit={(vals) => doLogin(vals)}>
 
             <Form.Item>
@@ -17,7 +17,7 @@ const LoginForm = ({doLogin, hasLoginFailed, errorMsg, isLoading}) => {
 
             <Button type='primary' htmlType='submit' className={style.loginButton} loading={isLoading}>Submit</Button>
         </LocalForm>
-    )
-}
+
+)
 
 export default LoginForm;

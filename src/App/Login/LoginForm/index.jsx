@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import LoginFormView from './LoginFormView';
+import LoginForm from './LoginForm';
 import { operations, selectors } from 'services/ducks/auth';
 
 const mapStateToProps = (state) => ({
@@ -10,9 +10,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     doLogin: ({username, password}) => {
-        dispatch({type:"MEMES"})
         dispatch(operations.doLogin(username, password));
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginFormView);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

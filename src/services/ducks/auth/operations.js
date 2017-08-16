@@ -24,6 +24,7 @@ const doLogin = (username, pass) => {
         }
         else {
             let token = resp_body.token;
+            sessionStorage.setItem('token', token);
             dispatch(actions.setToken(token));
         }
     }

@@ -1,21 +1,41 @@
 /* Root App element
  * Sets up Redux store
  */
-import 'babel-polyfill';
 import React from 'react';
-import { Provider } from 'react-redux';
-import Login from './screens/Login';
+import { connect } from 'react-redux';
+import Login from './Login';
+import Dashboard from './Dashboard';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 import { Layout } from 'antd';
-import configureStore from 'services/configureStore';
+import { selectors } from 'services/ducks/auth';
 
-const store = configureStore();
+const mapStateToProps = (state) => ({
+    isLoggedIn: selectors.isLoggedIn(state)
+})
 
-const App = () => (
-    <Provider store={store}>
-        <Layout>
-            <Login />
-        </Layout>
-    </Provider>
+const App = ({ isLoggedIn }) => (
+    <div>
+        <Route path='/login' render={() => (
+            isLoggedIn ?
+                <Redirect to='/dashboard' />
+                :
+                <Login />
+        )} />
+
+        <Route path='/dashboard' render={() => (
+            isLoggedIn ?
+                <Dashboard />
+                :
+                <Redirect to='/login' />
+        )} />
+
+        <Route path='/' render={() => (
+            isLoggedIn ?
+                <Redirect to='/dashboard' />
+                :
+                <Redirect to='/login' />
+        )} />
+    </div>
 );
 
-export default App;
+export default withRouter(connect(mapStateToProps)(App));
