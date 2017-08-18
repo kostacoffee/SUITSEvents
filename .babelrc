@@ -14,6 +14,7 @@
         [
             "import", { "libraryName": "antd", "style": "css" }
         ],
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        "transform-runtime"
     ]
 }

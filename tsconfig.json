@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "module": "es6",
+    "target": "es6",
+    "sourceMap": false,
+    "noImplicitAny": false,
+    "jsx": "preserve",
+    "allowJs": true
+  },
+  "exclude": ["node_modules"]
+}

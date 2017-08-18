@@ -3,23 +3,28 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports =
-
 {
     devtool: 'source-map',
-    entry: {
-        'app': [
-          'babel-polyfill',
-          'react-hot-loader/patch',
-          './src/index.js'
-        ]
+    devServer: {
+        hot: true
     },
+
+    entry: [
+        "babel-polyfill",
+        "react-hot-loader/patch",
+        './src/index.tsx'
+    ],
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name].js'
+        filename: 'app.js'
     },
+
     module: {
         rules: [
             { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
+
+            { test: /\.tsx?$/, exclude: /node_modules/, use: ['babel-loader', 'ts-loader']},
+
             { test: /\.css$/, include: /node_modules/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -43,11 +48,10 @@ module.exports =
         ]
 
     },
+
     resolve: {
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
         modules: [
-            "screens",
-            "App",
             "node_modules",
             path.resolve(__dirname, 'src')
         ]
