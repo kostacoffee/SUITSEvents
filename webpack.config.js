@@ -31,15 +31,17 @@ module.exports =
                     use: 'css-loader',
                 })
            },
+
            { test: /\.css$/, exclude: /node_modules/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
                         {
-                            loader: 'css-loader',
+                            loader: 'typings-for-css-modules-loader',
                             query: {
                                 modules: true,
-                                localIdentName: '[name]__[local]___[hash:base64:5]'
+                                localIdentName: '[name]__[local]___[hash:base64:5]',
+                                namedExport: true
                             }
                         }
                     ]
