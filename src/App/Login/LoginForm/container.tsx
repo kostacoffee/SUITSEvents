@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import View from './view';
 import { operations, selectors } from 'services/ducks/auth';
 import State from 'services/state';
+import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = (state: State) => ({
     hasLoginFailed: selectors.hasLoginFailed(state),
@@ -21,4 +22,4 @@ const LoginForm = (props: any) => (
     <View {...props} onSubmit={props.doLogin} />
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm));

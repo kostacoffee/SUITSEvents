@@ -1,5 +1,6 @@
-import { TypeKeys, Member, Action } from './types';
+import { TypeKeys, Action } from './types';
 import ActionStatus from '../ActionStatus';
+import { Member } from 'services/models';
 
 const startGetMembers = () :Action => ({
     type: TypeKeys.GET_MEMBERS,

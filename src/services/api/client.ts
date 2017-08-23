@@ -6,7 +6,7 @@ let client = axios.create({
     // Set the auth header at startup (if we logged in previously, we will be on dashboard with a token)
     // If we didn't log in there will be no token. We will be on the login page
     headers: {
-        Authorization: 'bearer '+sessionStorage.getItem('token')
+        Authorization: 'Bearer '+sessionStorage.getItem('token')
     }
 })
 
@@ -17,12 +17,7 @@ export interface ApiResponse {
 
 export function dataAndStatus(func: (...args: any[]) => Promise<AxiosResponse>) : (...args: any[]) => Promise<ApiResponse> {
     return async (...args: any[]) => {
-        let resp;
-        try {    
-            resp = await func(...args);
-        } catch (e) {
-            console.log(e);
-        }
+        let resp = await func(...args)
 
         return {
             body: resp.data,

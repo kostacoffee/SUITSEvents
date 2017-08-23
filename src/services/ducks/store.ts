@@ -1,7 +1,7 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 
 import thunkMiddleware from 'redux-thunk';
-import loggerMiddleware from 'redux-logger';
+import { createLogger } from 'redux-logger';
 
 import { createBrowserHistory } from 'history';
 import { routerReducer, routerMiddleware as createRouterMiddleware } from 'react-router-redux';
@@ -18,11 +18,15 @@ const rootReducer = combineReducers({
     router: routerReducer
 });
 
+const logger = createLogger({
+    predicate: (getState, action) => !action.type.startsWith("@@")
+});
+
 export const store = createStore(
     rootReducer,
     applyMiddleware(
         thunkMiddleware,
         routerMiddleware,
-        loggerMiddleware
+        logger
     )
 );

@@ -1,19 +1,5 @@
 import ActionStatus from '../ActionStatus';
-
-export interface Member {
-    id: number,
-    firstName: string,
-    lastName: string,
-    gender: string,
-    email: string,
-    joinedOn: Date,
-    access: number, sid: number,
-    
-    newsletter: boolean,
-    doingIT: boolean,
-    registered: boolean
-
-}
+import { Member } from 'services/models';
 
 export enum TypeKeys {
     GET_MEMBERS = 'members/GET_MEMBERS',

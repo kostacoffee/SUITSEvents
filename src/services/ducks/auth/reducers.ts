@@ -1,12 +1,7 @@
 import { combineReducers } from 'redux';
 import { TypeKeys, Action } from './types';
 import ActionStatus from '../ActionStatus'
-
-interface State {
-    loading: boolean
-    token: string
-    error: string
-}
+import State from './state'
 
 const initialState: State = {
     loading: false,
@@ -14,9 +9,8 @@ const initialState: State = {
     error: ''
 }
 
-const reducer = (state: State = initialState, action: Action) :State => {
-    switch (action.status) {
-
+const loginReducer = (state: State, action: Action) :State => {
+    switch(action.status) {
         case ActionStatus.START:
             return {
                 ...state,
@@ -36,7 +30,15 @@ const reducer = (state: State = initialState, action: Action) :State => {
                 token: '',
                 error: action.error
             }
+    }
+}
 
+const reducer = (state: State = initialState, action: Action) :State => {
+    switch (action.type) {
+
+        case TypeKeys.LOGIN:
+            return loginReducer(state, action)
+            
         default:
             return state;
 

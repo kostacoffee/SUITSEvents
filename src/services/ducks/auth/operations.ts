@@ -6,7 +6,7 @@ import client from 'services/api/client';
 
 const doLogin = (username: string, pass: string) => {
 
-    return async (dispatch: (arg: Action) => void) => {
+    return async (dispatch: Function) => {
         dispatch(actions.startLogin());
         let resp;
         try {
@@ -25,7 +25,7 @@ const doLogin = (username: string, pass: string) => {
             sessionStorage.setItem('token', token);
 
             // When we successfully log in, update the client with the auth token.
-            client.defaults.headers.common['Authorization'] = 'bearer '+token;
+            client.defaults.headers['Authorization'] = 'Bearer '+token;
 
             dispatch(actions.setToken(token));
         }

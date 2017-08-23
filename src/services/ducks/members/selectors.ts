@@ -1,23 +1,10 @@
 import State from 'services/state';
-const isLoggedIn = (state: State) : boolean => {
-    return Boolean(state.auth.token);
-}
+import { Member } from 'services/models'
 
-const hasLoginFailed = (state: State) : boolean => {
-    return Boolean(state.auth.error);
-}
-
-const getErrorMsg = (state: State) : string => {
-    return state.auth.error;
-}
-
-const isLoading = (state: State) : boolean => {
-    return state.auth.loading;
+const getMembers = (state: State) :Member[] => {
+    return state.members.members;
 }
 
 export default {
-    isLoggedIn,
-    hasLoginFailed,
-    getErrorMsg,
-    isLoading
+    getMembers
 }
