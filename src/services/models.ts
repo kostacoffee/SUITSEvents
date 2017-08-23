@@ -12,3 +12,10 @@ export interface Member {
     registered: boolean
 
 }
+
+export interface Event {
+    id: number
+    title: string
+    description: string
+    time: Date
+}

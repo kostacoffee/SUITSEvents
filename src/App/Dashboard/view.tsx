@@ -9,7 +9,7 @@ import Members from './Members';
 class Dashboard extends React.Component<Props, {}> {
     componentDidMount() {
         this.props.getMembers();
-        //this.props.getEvents();
+        this.props.getEvents();
     }
 
     render() {

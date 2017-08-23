@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
-import { TypeKeys, Action, GetMembersAction } from './types';
+import { TypeKeys, Action, GetEventsAction } from './types';
 import ActionStatus from '../ActionStatus';
 import State from './state';
-import { Member } from 'services/models'
+import { Event } from 'services/models'
 
 const initialState: State = {
-    members: [],
+    events: [],
     loading: false,
     error: ''
 }
 
-const getMembersReducer = (state: State, action: GetMembersAction) :State => {
+const getEventsReducer = (state: State, action: GetEventsAction) :State => {
     switch (action.status) {
         case ActionStatus.START:
             return {
@@ -22,7 +22,7 @@ const getMembersReducer = (state: State, action: GetMembersAction) :State => {
             return {
                 ...state,
                 loading: false,
-                members: action.members
+                events: action.events
             }
         
         case ActionStatus.FAIL:
@@ -37,8 +37,8 @@ const getMembersReducer = (state: State, action: GetMembersAction) :State => {
 const reducer = (state: State = initialState, action: Action) :State => {
     switch (action.type) {
 
-        case TypeKeys.GET_MEMBERS:
-            return getMembersReducer(state, action);
+        case TypeKeys.GET_EVENTS:
+            return getEventsReducer(state, action);
         
         default:
             return state;
