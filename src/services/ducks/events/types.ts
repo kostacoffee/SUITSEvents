@@ -8,8 +8,8 @@ export enum TypeKeys {
 export interface GetEventsAction {
     type: TypeKeys.GET_EVENTS,
     status: ActionStatus,
-    events?: Event[],
-    error?: string,
+    events: Event[],
+    error: string,
 }
 
 export type Action = GetEventsAction

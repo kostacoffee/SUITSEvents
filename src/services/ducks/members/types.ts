@@ -8,8 +8,8 @@ export enum TypeKeys {
 export interface GetMembersAction {
     type: TypeKeys.GET_MEMBERS,
     status: ActionStatus,
-    members?: Member[],
-    error?: string,
+    members: Member[],
+    error: string,
 }
 
 export type Action = GetMembersAction;

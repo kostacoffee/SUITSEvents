@@ -5,7 +5,7 @@ import State from './state'
 
 const initialState: State = {
     loading: false,
-    token: sessionStorage.getItem('token'),
+    token: sessionStorage.token,
     error: ''
 }
 

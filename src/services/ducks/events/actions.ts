@@ -4,18 +4,22 @@ import { Event } from 'services/models';
 
 const startGetEvents = () :Action => ({
     type: TypeKeys.GET_EVENTS,
-    status: ActionStatus.START
+    status: ActionStatus.START,
+    events: [],
+    error: ""
 })
 
 const setEvents = (events: Event[]) :Action => ({
     type: TypeKeys.GET_EVENTS,
     status: ActionStatus.SUCCESS,
-    events
+    events,
+    error: ""
 })
  
 const setError = (error: string) :Action => ({
     type: TypeKeys.GET_EVENTS,
     status: ActionStatus.FAIL,
+    events: [],
     error
 })
 

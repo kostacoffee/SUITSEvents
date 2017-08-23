@@ -4,18 +4,22 @@ import { Member } from 'services/models';
 
 const startGetMembers = () :Action => ({
     type: TypeKeys.GET_MEMBERS,
-    status: ActionStatus.START
+    status: ActionStatus.START,
+    members: [],
+    error: ""
 })
 
 const setMembers = (members: Member[]) :Action => ({
     type: TypeKeys.GET_MEMBERS,
     status: ActionStatus.SUCCESS,
-    members
+    members,
+    error: ""
 })
  
 const setError = (error: string) :Action => ({
     type: TypeKeys.GET_MEMBERS,
     status: ActionStatus.FAIL,
+    members: [],
     error
 })
 

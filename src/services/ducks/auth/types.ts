@@ -7,8 +7,8 @@ export enum TypeKeys {
 export interface LoginAction {
     type: TypeKeys.LOGIN
     status: ActionStatus
-    token?: string
-    error?: string
+    token: string
+    error: string
 }
 
 export type Action = LoginAction;

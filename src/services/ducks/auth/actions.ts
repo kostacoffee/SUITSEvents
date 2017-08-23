@@ -4,18 +4,22 @@ import { Action } from './types';
 
 const startLogin = () :Action => ({
     type: TypeKeys.LOGIN,
-    status: ActionStatus.START
+    status: ActionStatus.START,
+    token: "",
+    error: ""
 })
 
 const setToken = (token: string) :Action => ({
     type: TypeKeys.LOGIN,
     status: ActionStatus.SUCCESS,
-    token
+    token,
+    error: ""
 })
 
 const setError = (error: string) :Action => ({
     type: TypeKeys.LOGIN,
     status: ActionStatus.FAIL,
+    token: "",
     error
 })
 
