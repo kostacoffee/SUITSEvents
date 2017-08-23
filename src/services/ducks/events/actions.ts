@@ -19,18 +19,6 @@ const setError = (error: string) :Action => ({
     error
 })
 
-/*
-const addMember = (member: Member) :ActionType => ({
-    type: TypeKeys.ADD_MEMBER,
-    member
-})
-
-const updateMember = (member: Member) :ActionType => ({
-    type: TypeKeys.UPDATE_MEMBER,
-    member
-})
-*/
-
 export default {
     startGetEvents,
     setEvents,
