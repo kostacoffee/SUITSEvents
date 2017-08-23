@@ -13,12 +13,12 @@ const getEvents = () => async (dispatch: Function) => {
         return;
     }
 
-    if (resp.status >= 400) {
-        let error = resp.body.message;
+    if (resp.isError) {
+        let error = resp.data.message;
         dispatch(actions.setError(error));
     }
     else {
-        let members = resp.body;
+        let members = resp.data;
         dispatch(actions.setEvents(members));
     }
 }

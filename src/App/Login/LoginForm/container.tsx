@@ -13,7 +13,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Function) => ({
     doLogin: ({username, password}: {username: string, password: string}) => {
-        console.log(username, password);
         dispatch(operations.doLogin(username, password));
     }
 })

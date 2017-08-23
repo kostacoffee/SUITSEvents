@@ -1,6 +1,7 @@
 import { Member } from 'services/models';
 export default interface State {
-    members: Member[],
-    loading: boolean,
+    members: Member[]
+    loading: boolean
     error: string
+    filter: string
 }

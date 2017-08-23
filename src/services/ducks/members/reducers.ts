@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { TypeKeys, Action, GetMembersAction } from './types';
+import { TypeKeys, Action, GetMembersAction, SetFilterAction } from './types';
 import ActionStatus from '../ActionStatus';
 import State from './state';
 import { Member } from 'services/models'
@@ -7,7 +7,8 @@ import { Member } from 'services/models'
 const initialState: State = {
     members: [],
     loading: false,
-    error: ''
+    error: '',
+    filter: ''
 }
 
 const getMembersReducer = (state: State, action: GetMembersAction) :State => {
@@ -34,12 +35,21 @@ const getMembersReducer = (state: State, action: GetMembersAction) :State => {
     }
 }
 
+const setFilterReducer = (state: State, action: SetFilterAction) => {
+    return {
+        ...state,
+        filter: action.filter
+    }
+}
+
 const reducer = (state: State = initialState, action: Action) :State => {
     switch (action.type) {
 
         case TypeKeys.GET_MEMBERS:
             return getMembersReducer(state, action);
         
+        case TypeKeys.SET_FILTER:
+            return setFilterReducer(state, action);
         default:
             return state;
 

@@ -1,11 +1,18 @@
 import { connect } from 'react-redux';
 import View from './View';
 import State from 'services/state'
-import { StateProps } from './props';
+import { StateProps, DispatchProps } from './props';
 import { selectors } from 'services/ducks/members'
+import { operations } from 'services/ducks/members'
 
 const mapStateToProps = (state: State) :StateProps => ({
-    members: selectors.getMembers(state)
+    filteredMembers: selectors.getFilteredMembers(state, selectors.getFilter(state))
 })
 
-export default connect(mapStateToProps)(View);
+const mapDispatchToProps = (dispatch: Function) :DispatchProps => ({
+    setFilter: (filter: string) => {
+        dispatch(operations.setFilter(filter));
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(View);

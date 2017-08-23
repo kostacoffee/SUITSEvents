@@ -3,6 +3,7 @@ import { Member } from 'services/models';
 
 export enum TypeKeys {
     GET_MEMBERS = 'members/GET_MEMBERS',
+    SET_FILTER = 'members/SET_FILTER',
 }
 
 export interface GetMembersAction {
@@ -12,4 +13,9 @@ export interface GetMembersAction {
     error: string,
 }
 
-export type Action = GetMembersAction;
+export interface SetFilterAction {
+    type: TypeKeys.SET_FILTER
+    filter: string
+}
+
+export type Action = GetMembersAction | SetFilterAction;

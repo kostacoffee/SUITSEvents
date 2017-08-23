@@ -16,12 +16,12 @@ const doLogin = (username: string, pass: string) => {
             return;
         }
         
-        if (resp.status >= 400) {
-            let error = resp.body.message;
+        if (resp.isError) {
+            let error = resp.data.message;
             dispatch(actions.setError(error));
         }
         else {
-            let token = resp.body.token;
+            let token = resp.data.token;
             sessionStorage.setItem('token', token);
 
             // When we successfully log in, update the client with the auth token.

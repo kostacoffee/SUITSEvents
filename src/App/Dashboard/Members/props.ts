@@ -1,4 +1,8 @@
 import { Member } from 'services/models';
 export interface StateProps {
-    members: Member[]
+    filteredMembers: Member[]
+}
+
+export interface DispatchProps {
+    setFilter: Function
 }

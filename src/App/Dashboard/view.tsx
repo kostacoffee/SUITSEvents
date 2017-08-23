@@ -5,6 +5,7 @@ import Sider from './Sider';
 import Events from './Events';
 import Props from './props';
 import Members from './Members';
+import style from './style.css'
 
 class Dashboard extends React.Component<Props, {}> {
     componentDidMount() {
@@ -14,8 +15,8 @@ class Dashboard extends React.Component<Props, {}> {
 
     render() {
         return (
-            <Layout>
-                <Layout.Sider collapsed>
+            <Layout className={style.fullpage}>
+                <Layout.Sider collapsed className={style.sider}>
                     {/* TODO add logo */}
                     <Sider />
                 </Layout.Sider>
