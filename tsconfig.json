@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "module": "es6",
     "target": "es6",
     "sourceMap": false,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "jsx": "preserve",
-    "allowJs": true
+    "allowJs": false,
+    "skipLibCheck": true,
+    "experimentalDecorators": true
   },
   "exclude": ["node_modules"]
 }

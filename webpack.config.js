@@ -38,7 +38,7 @@ module.exports =
                     use: [
                         {
                             loader: 'typings-for-css-modules-loader',
-                            query: {
+                            options: {
                                 modules: true,
                                 localIdentName: '[name]__[local]___[hash:base64:5]',
                                 namedExport: true

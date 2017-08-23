@@ -1,9 +1,14 @@
-const LOGIN_START = 'auth/LOGIN_START';
-const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
-const LOGIN_FAIL = 'auth/LOGIN_FAIL';
+import ActionStatus from '../ActionStatus';
 
-export default {
-    LOGIN_START,
-    LOGIN_SUCCESS,
-    LOGIN_FAIL
-};
+export enum TypeKeys {
+    LOGIN = 'auth/LOGIN'
+}
+
+export interface LoginAction {
+    type: TypeKeys.LOGIN
+    status: ActionStatus
+    token?: string
+    error?: string
+}
+
+export type Action = LoginAction;

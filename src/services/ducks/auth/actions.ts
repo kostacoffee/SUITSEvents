@@ -1,16 +1,21 @@
-import types from './types';
+import { TypeKeys } from './types';
+import ActionStatus from '../ActionStatus';
+import { Action } from './types';
 
-const startLogin = () => ({
-    type: types.LOGIN_START
+const startLogin = () :Action => ({
+    type: TypeKeys.LOGIN,
+    status: ActionStatus.START
 })
 
-const setToken = (token) => ({
-    type: types.LOGIN_SUCCESS,
+const setToken = (token: string) :Action => ({
+    type: TypeKeys.LOGIN,
+    status: ActionStatus.SUCCESS,
     token
 })
 
-const setError = (error) => ({
-    type: types.LOGIN_FAIL,
+const setError = (error: string) :Action => ({
+    type: TypeKeys.LOGIN,
+    status: ActionStatus.FAIL,
     error
 })
 

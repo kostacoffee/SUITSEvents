@@ -2,18 +2,13 @@
  * Sets up Redux store
  */
 import React from 'react';
-import { connect } from 'react-redux';
 import Login from './Login';
 import Dashboard from './Dashboard';
-import { Route, Redirect, withRouter } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
-import { selectors } from 'services/ducks/auth';
+import { SFC } from 'App/types';
 
-const mapStateToProps = (state) => ({
-    isLoggedIn: selectors.isLoggedIn(state)
-})
-
-const App = ({ isLoggedIn }) => (
+const App: SFC = ({ isLoggedIn }) => (
     <div>
         <Route path='/login' render={() => (
             isLoggedIn ?
@@ -38,4 +33,4 @@ const App = ({ isLoggedIn }) => (
     </div>
 );
 
-export default withRouter(connect(mapStateToProps)(App));
+export default App;

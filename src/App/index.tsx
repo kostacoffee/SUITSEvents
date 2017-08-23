@@ -1,31 +1,21 @@
 import React from 'react';
-
-import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
 
-import thunkMiddleware from 'redux-thunk'
-import loggerMiddleware from 'redux-logger';
+import { store, history } from 'services/ducks/store'
+import App from './container';
 
-import { BrowserRouter } from 'react-router-dom';
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 
-import * as reducers from 'services/ducks'
-import App from './App';
 
-const rootReducer = combineReducers(reducers);
-
-const store = createStore(
-    rootReducer,
-    applyMiddleware(
-        thunkMiddleware,
-        loggerMiddleware
-    )
-);
-
-const Root = () => (
+const Root = () : JSX.Element => (
     <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <ConnectedRouter history={history}>
+            <LocaleProvider locale={enUS}>
+                <App />
+            </LocaleProvider>
+        </ConnectedRouter>
     </Provider>
 );
 

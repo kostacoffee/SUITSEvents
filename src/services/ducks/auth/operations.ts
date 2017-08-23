@@ -1,30 +1,32 @@
 import actions from './actions';
-import fetch from 'isomorphic-fetch';
+import config from 'config';
+import { Token } from 'services/api';
+import { Action } from './types'
+import client from 'services/api/client';
 
-const doLogin = (username, pass) => {
+const doLogin = (username: string, pass: string) => {
 
-    return async (dispatch) => {
+    return async (dispatch: (arg: Action) => void) => {
         dispatch(actions.startLogin());
-        let resp = await fetch("https://api.suits.org.au/token", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                user: username,
-                pass
-            })
-        });
-
-        let resp_body = await resp.json();
-
+        let resp;
+        try {
+            resp = await Token.getToken(username, pass);
+        } catch (e) {
+            dispatch(actions.setError("Something went very wrong..."));
+            return;
+        }
+        
         if (resp.status >= 400) {
-            let error = resp_body.message;
+            let error = resp.body.message;
             dispatch(actions.setError(error));
         }
         else {
-            let token = resp_body.token;
+            let token = resp.body.token;
             sessionStorage.setItem('token', token);
+
+            // When we successfully log in, update the client with the auth token.
+            client.defaults.headers.common['Authorization'] = 'bearer '+token;
+
             dispatch(actions.setToken(token));
         }
     }

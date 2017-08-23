@@ -1,0 +1,1 @@
+export type SFC = (...args: any[]) => JSX.Element;

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Menu, Input } from 'antd';
+import State from 'services/state'
 
-const mapStateToProps = (state) => ({
-    events: getEvents(state)
+const mapStateToProps = (state: State) => ({
+    //events: getEvents(state)
 })
 
-const Events = ({events}) => (
+const Events = () => (
     <div style={{width: "250px"}}>
     <Input.Search placeholder="Search for event" style={{height: "32px"}}/>
     <Menu>

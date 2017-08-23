@@ -9,7 +9,7 @@ import { AppContainer } from 'react-hot-loader';
 
 import App from './App'
 
-const render = Component => {
+const render = (Component: () => JSX.Element) :void => {
     ReactDOM.render(
         <AppContainer>
             <Component />

@@ -1,5 +1,4 @@
 import State from 'services/state';
-
 const isLoggedIn = (state: State) : boolean => {
     return Boolean(state.auth.token);
 }
@@ -16,14 +15,9 @@ const isLoading = (state: State) : boolean => {
     return state.auth.loading;
 }
 
-const getToken = (state: State) : string => {
-    return state.auth.token;
-}
-
 export default {
     isLoggedIn,
     hasLoginFailed,
     getErrorMsg,
-    isLoading,
-    getToken
+    isLoading
 }
