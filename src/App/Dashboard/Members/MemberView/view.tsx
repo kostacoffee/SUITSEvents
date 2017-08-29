@@ -2,19 +2,15 @@ import React from 'react';
 import { StateProps, ComponentState, DispatchProps } from './props';
 import style from './style.css'
 import { Form, Input, Radio, InputNumber, Checkbox, Button } from 'antd'
+import FormComponent from 'App/components/Form'
 
-export default class View extends React.Component<StateProps, ComponentState> {
+export default class View extends FormComponent<StateProps, ComponentState> {
 
     constructor(props: StateProps) {
         super(props);
         this.state = { ...props.member };
     }
 
-    handleChange(e: React.SyntheticEvent<any>) {
-        var change: any = {}
-        change[e.currentTarget.name] = e.currentTarget.value
-        this.setState(change)
-    }
 
     componentWillReceiveProps(newProps: StateProps) {
         this.setState({...newProps.member});

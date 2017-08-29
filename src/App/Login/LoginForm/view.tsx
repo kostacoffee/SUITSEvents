@@ -2,20 +2,15 @@ import React from 'react';
 import { Form, Icon, Button, Input } from 'antd';
 import style from './style.css';
 import { StateProps, DispatchProps, ComponentState } from './props';
+import FormComponent from 'App/components/Form'
 
-export default class View extends React.Component<StateProps & DispatchProps, ComponentState> {
+export default class View extends FormComponent<StateProps & DispatchProps, ComponentState> {
     constructor(props: StateProps & DispatchProps) {
         super(props);
         this.state = {
             username: '',
             password: ''
         }
-    }
-
-    handleChange(e: React.SyntheticEvent<any>) {
-        var change: any = {}
-        change[e.currentTarget.name] = e.currentTarget.value
-        this.setState(change)
     }
 
     handleSubmit(event: React.FormEvent<any>) {
