@@ -23,8 +23,14 @@ const setError = (error: string) :Action => ({
     error
 })
 
+const setFilter = (filter: string) :Action => ({
+    type: TypeKeys.SET_FILTER,
+    filter
+})
+
 export default {
     startGetEvents,
     setEvents,
-    setError
+    setError,
+    setFilter
 }

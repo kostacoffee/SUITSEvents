@@ -23,6 +23,9 @@ const getEvents = () => async (dispatch: Function) => {
     }
 }
 
+const setFilter = actions.setFilter;
+
 export default {
-    getEvents
+    getEvents,
+    setFilter
 }

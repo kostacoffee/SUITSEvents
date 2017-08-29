@@ -5,7 +5,8 @@ export interface Member {
     gender: string,
     email: string,
     joinedOn: Date,
-    access: number, sid: number,
+    access: number, 
+    sid: number,
     
     newsletter: boolean,
     doingIT: boolean,

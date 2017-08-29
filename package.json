@@ -20,7 +20,6 @@
     "react-router-dom": "^4.1.2",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.7.2",
-    "redux-form": "^7.0.3",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
   },
@@ -33,7 +32,6 @@
     "@types/react-redux": "^5.0.3",
     "@types/react-router-dom": "^4.0.7",
     "@types/react-router-redux": "^5.0.7",
-    "@types/redux-form": "^6.6.9",
     "@types/redux-logger": "^3.0.0",
     "@types/webpack-env": "^1.13.0",
     "babel-core": "^6.25.0",

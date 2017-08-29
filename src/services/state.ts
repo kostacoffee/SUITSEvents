@@ -6,5 +6,4 @@ export default interface State {
     members: MembersState
     events: EventsState
     form: any
-    router: any
 }

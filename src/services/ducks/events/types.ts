@@ -3,6 +3,7 @@ import { Event } from 'services/models';
 
 export enum TypeKeys {
     GET_EVENTS = 'events/GET_EVENTS',
+    SET_FILTER = 'events/SET_FILTER'
 }
 
 export interface GetEventsAction {
@@ -12,4 +13,9 @@ export interface GetEventsAction {
     error: string,
 }
 
-export type Action = GetEventsAction
+export interface SetFilterAction {
+    type: TypeKeys.SET_FILTER,
+    filter: string
+}
+
+export type Action = GetEventsAction | SetFilterAction

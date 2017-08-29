@@ -1,36 +1,44 @@
 import React from 'react';
 import { Form, Icon, Button, Input } from 'antd';
-import { reduxForm, Field, FormProps } from 'redux-form';
 import style from './style.css';
+import { StateProps, DispatchProps, ComponentState } from './props';
 
-interface LoginProps extends FormProps<FormData, {}, {}> {
-    doLogin: (loginDetails: object) => void,
-    hasLoginFailed: boolean,
-    errorMsg: string,
-    isLoading: boolean
+export default class View extends React.Component<StateProps & DispatchProps, ComponentState> {
+    constructor(props: StateProps & DispatchProps) {
+        super(props);
+        this.state = {
+            username: '',
+            password: ''
+        }
+    }
+
+    handleChange(e: React.SyntheticEvent<any>) {
+        var change: any = {}
+        change[e.currentTarget.name] = e.currentTarget.value
+        this.setState(change)
+    }
+
+    handleSubmit(event: React.FormEvent<any>) {
+        event.preventDefault();
+        this.props.doLogin(this.state.username, this.state.password);
+    }
+    
+    render() {
+        const handleSubmit = this.handleSubmit;
+        const { hasLoginFailed, errorMsg, isLoading } = this.props;
+        return (
+            <Form onSubmit={handleSubmit.bind(this)}>
+
+                <Form.Item required={true}>
+                    <Input placeholder="Username" name="username" prefix={<Icon type="user" />} onChange={this.handleChange.bind(this)}/>
+                </Form.Item>
+
+                <Form.Item validateStatus={hasLoginFailed ? 'error' : 'success'} help={errorMsg} required={true}>
+                    <Input placeholder="Password" name="password" prefix={<Icon type="lock" />} type="password" onChange={this.handleChange.bind(this)}/>
+                </Form.Item>
+
+                <Button type='primary' htmlType='submit' className={style.loginButton} loading={isLoading}>Submit</Button>
+            </Form>
+        )
+    }
 }
-
-const LoginForm: React.SFC<LoginProps> = ({handleSubmit, hasLoginFailed, errorMsg, isLoading}) => (
-
-        <Form onSubmit={handleSubmit}>
-
-            <Form.Item required={true}>
-                <Field name='username' component={ ({input, meta, ...rest} : {input: any, meta: any}) =>
-                    <Input placeholder="Username" prefix={<Icon type="user" />} {...rest} {...input} />
-                }/>
-            </Form.Item>
-
-            <Form.Item validateStatus={hasLoginFailed ? 'error' : 'success'} help={errorMsg} required={true}>
-                <Field name='password' component={ ({input, meta, ...rest}: {input : any, meta: any}) =>
-                    <Input placeholder="Password" prefix={<Icon type="lock" />} type="password" {...rest} {...input} />
-                }/>
-            </Form.Item>
-
-            <Button type='primary' htmlType='submit' className={style.loginButton} loading={isLoading}>Submit</Button>
-        </Form>
-
-)
-
-export default reduxForm({
-    form: 'login',
-})(LoginForm);

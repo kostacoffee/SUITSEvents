@@ -6,7 +6,7 @@ import { selectors } from 'services/ducks/members'
 import { operations } from 'services/ducks/members'
 
 const mapStateToProps = (state: State) :StateProps => ({
-    filteredMembers: selectors.getFilteredMembers(state, selectors.getFilter(state))
+    filteredMembers: selectors.getFilteredMembers(state)
 })
 
 const mapDispatchToProps = (dispatch: Function) :DispatchProps => ({

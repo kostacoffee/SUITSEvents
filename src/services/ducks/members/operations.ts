@@ -2,6 +2,7 @@ import actions from './actions';
 import { selectors } from '../auth';
 import config from 'config';
 import { Member } from 'services/api';
+import { Member as MemberModel } from 'services/models';
 
 const getMembers = () => async (dispatch: Function) => {
     dispatch(actions.startGetMembers());

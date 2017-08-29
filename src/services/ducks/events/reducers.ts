@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { TypeKeys, Action, GetEventsAction } from './types';
+import { TypeKeys, Action, GetEventsAction, SetFilterAction } from './types';
 import ActionStatus from '../ActionStatus';
 import State from './state';
 import { Event } from 'services/models'
@@ -7,7 +7,8 @@ import { Event } from 'services/models'
 const initialState: State = {
     events: [],
     loading: false,
-    error: ''
+    error: '',
+    filter: ''
 }
 
 const getEventsReducer = (state: State, action: GetEventsAction) :State => {
@@ -34,11 +35,21 @@ const getEventsReducer = (state: State, action: GetEventsAction) :State => {
     }
 }
 
+const setFilterReducer = (state: State, action: SetFilterAction) :State => {
+    return {
+        ...state,
+        filter: action.filter
+    }
+}
+
 const reducer = (state: State = initialState, action: Action) :State => {
     switch (action.type) {
 
         case TypeKeys.GET_EVENTS:
             return getEventsReducer(state, action);
+
+        case TypeKeys.SET_FILTER:
+            return setFilterReducer(state, action);
         
         default:
             return state;

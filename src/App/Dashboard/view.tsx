@@ -8,6 +8,10 @@ import Members from './Members';
 import style from './style.css'
 
 class Dashboard extends React.Component<Props, {}> {
+    constructor(props: Props) {
+        super(props)
+    }
+
     componentDidMount() {
         this.props.getMembers();
         this.props.getEvents();
@@ -22,8 +26,8 @@ class Dashboard extends React.Component<Props, {}> {
                 </Layout.Sider>
                 <Layout.Content>
                     <Route exact path='/dashboard' render={() => <div>Dashboard</div>} />
-                    { /* <Route exact path='/dashboard/events' component={Events} /> */}
-                    <Route exact path='/dashboard/members' component={Members} />
+                    <Route path='/dashboard/events' component={Events} />
+                    <Route path='/dashboard/members' component={Members} />
                 </Layout.Content>
             </Layout>
         )

@@ -1,0 +1,5 @@
+.memberView {
+    background-color: lightgray;
+    padding: 25px;
+    overflow-y: scroll;
+}
