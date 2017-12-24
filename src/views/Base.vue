@@ -14,7 +14,7 @@ export default {
 	name: "base",
 	mounted: function() {
 		let token = sessionStorage.getItem('token');
-		createSocket(token)
+		initApp(token)
 	}
 
 }

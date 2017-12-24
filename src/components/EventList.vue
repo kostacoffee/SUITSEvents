@@ -9,8 +9,8 @@ div
 </template>
 
 <script>
-import {socket} from '../socket'
 import $http from '../http';
+import state from '../state';
 
 export default {
 	name: "event-list",
@@ -22,18 +22,11 @@ export default {
 		}
 	},
 	mounted: async function () {
-		this.events = await $http.getEventList();
-		socket.on("newEvent", this.newEvent);
-		socket.on("updateEvent", this.updateEvent);
-		socket.on("deleteEvent", this.deleteEvent);
+		state.events = await $http.getEventList();
+		this.events = state.events;
+		state.members = await $http.getMembers();
 	},
 	methods: {
-		newEvent (eventData) {
-			this.$set(this.events, eventData.id, eventData);
-		},
-		updateEvent: function(eventData) {
-			this.events[eventData.id] = eventData;
-		},
 		deleteEvent (eventData) {
 			this.$delete(this.events, eventData.id);
 		},

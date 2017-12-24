@@ -20,8 +20,6 @@ div
 </template>
 
 <script>
-import {socket} from '../socket';
-
 export default {
 	name: 'event-attendance',
 	props: ['event', 'members', 'attendance'],

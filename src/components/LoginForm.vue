@@ -8,12 +8,15 @@ md-card.login-card
 			md-input-container
 				label Username
 				md-input(v-model="username")
-			md-input-container
+			md-input-container(v-bind:class=" { 'md-input-invalid': error } ")
 				label Password
 				md-input(v-model="password", type="password")
+				span.md-error {{error}}
 
 		md-card-actions
-			md-button(type="submit") Log in
+			md-button(type="submit", v-bind:disabled="loading")
+				md-spinner(md-indeterminate, v-if="loading")
+				span(v-else) Log in
 
 </template>
 
@@ -29,18 +32,28 @@ export default {
 				pass: this.password
 			};
 
+			this.loading = true;
+
 			let resp = await $http.auth(data);
 
-			if (resp == null)
-				return; // auth failed
+			this.loading = false;
 
+			if (resp == null) {
+				this.error = "Login failed"
+				return; // auth failed
+			}
+
+
+			console.log(resp)
 			this.$emit("loggedIn")
 		}
 	},
 	data () {
 		return {
 			username: null,
-			password: null
+			password: null,
+			error: null,
+			loading: false
 		}
 	}
 }

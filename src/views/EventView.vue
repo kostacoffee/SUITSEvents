@@ -11,7 +11,7 @@ md-layout(md-gutter)
 
 <script>
 import $http from '../http';
-import {socket} from '../socket';
+import state from '../state';
 
 export default {
 	name: "event-view",
@@ -38,17 +38,11 @@ export default {
 		}
 	},
 	mounted: async function () {
-		this.members = await $http.getMembers();
 		let eventP = $http.getEvent(this.$route.params.id);
 		let attP = $http.getEventAttendance(this.$route.params.id, this.members);
 
 		this.event = await eventP;
 		this.attendance = await attP;
-		socket.on("newMember", this.newMember);
-		socket.on("updateMember", this.updateMember);
-		socket.on("newAttendance", this.newAttendance);
-		socket.on("updateAttendance", this.updateAttendance);
-		socket.on("deleteAttendance", this.deleteAttendance);
 	},
 	methods: {
 		newMember(data) {

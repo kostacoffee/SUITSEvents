@@ -42,8 +42,6 @@ md-card
 </template>
 
 <script>
-import socket from '../socket';
-
 export default {
 	name: 'event-report',
 	props: ['event', 'members', 'attendance'],
