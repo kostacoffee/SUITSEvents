@@ -3,8 +3,8 @@ div
 	md-input-container.event-search
 		label Search
 		md-input(v-model="query")
-	md-layout(md-gutter)
-		md-layout.event-item(v-for="event in filteredEvents")
+	md-layout
+		md-layout(v-for="event in filteredEvents")
 			event-card.event(:event="event", @openEvent="openEvent", @deleteEvent="")
 </template>
 
@@ -68,9 +68,6 @@ export default {
 
 .event:hover
 	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-
-.event-item
-	flex: 0
 
 .event-search
 	margin-left: auto
