@@ -1,6 +1,6 @@
 <template lang="pug">
 div#event-menu
-	md-button.md-fab.md-accent.new-event-btn.md-raised(v-on:click="openDialog('add-event-dialog')")
+	md-button.md-fab.md-accent.new-event-btn.md-raised(v-on:click="shared.dialogs.newEvent = true")
 			md-icon add
 			md-tooltip(direction="bottom") Add Event
 	add-event-dialog(ref="add-event-dialog")
@@ -9,8 +9,14 @@ div#event-menu
 </template>
 
 <script>
+import state from '../state'
 export default {
 	name: "event-menu",
+	data () {
+		return {
+			shared: state
+		}
+	},
 	components: {
 		'event-list': function(resolve) {
 			require(['../components/EventList.vue'], resolve)
@@ -18,12 +24,8 @@ export default {
 		'add-event-dialog': function(resolve) {
 			require(['../components/AddEventDialog.vue'], resolve)
 		}
-	},
-	methods: {
-		openDialog: function (ref) {
-			this.$refs[ref].$children[0].open() //oh god pls help me
-		}
 	}
+
 
 }
 

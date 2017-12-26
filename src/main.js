@@ -4,6 +4,7 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import VueRouter from 'vue-router'
 import router from './routes'
+import state from './state'
 
 Vue.use(VueMaterial);
 Vue.use(VueRouter);

@@ -5,23 +5,23 @@ md-card.login-card
 			div.md-title Log in
 	
 		md-card-content
-			md-input-container
+			md-field
 				label Username
 				md-input(v-model="username")
-			md-input-container(v-bind:class=" { 'md-input-invalid': error } ")
+			md-field(v-bind:class=" { 'md-input-invalid': error } ")
 				label Password
 				md-input(v-model="password", type="password")
 				span.md-error {{error}}
 
 		md-card-actions
-			md-button(type="submit", v-bind:disabled="loading")
-				md-spinner(md-indeterminate, v-if="loading")
-				span(v-else) Log in
+			md-progress-spinner(md-mode="indeterminate", v-show="loading")
+			md-button(v-show="!loading", type="submit", v-bind:disabled="loading") Log In
 
 </template>
 
 <script>
 import $http from "../http";
+import state from '../state'
 
 export default {
 	name: 'login-form',
@@ -42,9 +42,11 @@ export default {
 				this.error = "Login failed"
 				return; // auth failed
 			}
+			
+			console.log(resp);
+			sessionStorage.setItem('token', resp.data.token)
+			this.shared.token = resp.data.token;
 
-
-			console.log(resp)
 			this.$emit("loggedIn")
 		}
 	},
@@ -53,7 +55,8 @@ export default {
 			username: null,
 			password: null,
 			error: null,
-			loading: false
+			loading: false,
+			shared: state
 		}
 	}
 }

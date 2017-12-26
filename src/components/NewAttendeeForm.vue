@@ -5,15 +5,15 @@ md-card
 			h1.md-title New Attendee
 
 		md-card-content
-			md-input-container
+			md-field
 				label First Name
 				md-input(v-model="firstName", required)
 
-			md-input-container
+			md-field
 				label Last Name
 				md-input(v-model="lastName", required)
 
-			md-input-container
+			md-field
 				label Access
 				md-input(v-model="access", type="number")
 

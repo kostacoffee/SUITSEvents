@@ -1,37 +1,50 @@
 let state = {
-    members: {},
-    events: {},
-    attendance: {}
+    members: [],
+    events: [],
+	attendance: [],
+	apiURL: 'http://localhost:5000',
+	token: sessionStorage.getItem('token'),
+	dialogs: {
+		newEvent: false,
+		deleteEvent: {
+			open: false,
+			selectedEvent: null
+		}
+	},
+	selectedMember: null
 };
 
 export function updateState(data) {
     switch(data.resource) {
 		case "Member": 
-			updateState(state.members, data.action, data.data);
+			updateResource("members", data.action, data.data);
 			break;
 
 		case "Event": 
-			updateState(state.events, data.action, data.data);
+			updateResource("events", data.action, data.data);
 			break;
 
 		case "Attendance":
-			updateState(state.attendance, data.action, data.data);
+			updateResource("attendance", data.action, data.data);
 			break;
 	}
 }
 
 function updateResource(resource, action, data) {
+	console.log(resource, action, data);
     switch(action) {
 		case "INSERT": 
-			resource[data.id] = data.data;
+			state[resource] = [data, ...state[resource]]
 			break;
 		
 		case "UPDATE":
-			resource[data.id] = data.data;
+			let i = state[resource].findIndex(r => r.id == data.id)
+			state[resource].splice(i, 1, data)
 			break;
 
 		case "DELETE":
-			delete state[resource][data.id];
+			i = state[resource].findIndex(r => r.id == data.id)
+			state[resource].splice(i, 1)
 			break;
 	}
 }

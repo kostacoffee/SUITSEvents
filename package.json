@@ -7,7 +7,9 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --host 0.0.0.0 --inline --hot --content-base src/",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules && cp src/index.html public/."
   },
-  "dependencies": {},
+  "dependencies": {
+    "moment": "^2.20.1"
+  },
   "devDependencies": {
     "axios": "^0.15.3",
     "babel-core": "^6.0.0",
@@ -20,11 +22,11 @@
     "node-sass": "^4.0.0",
     "pug": "^2.0.0-beta6",
     "sass-loader": "^4.0.2",
-    "socket.io-client": "^1.7.2",
+    "socket.io-client": "^1.7.4",
     "style-loader": "^0.13.1",
     "vue": "^2.0.1",
     "vue-loader": "^9.7.0",
-    "vue-material": "^0.5.0",
+    "vue-material": "^1.0.0-beta-7",
     "vue-router": "^2.1.1",
     "webpack": "^2.1.0-beta.25",
     "webpack-dev-server": "^2.1.0-beta.0"

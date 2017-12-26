@@ -2,11 +2,11 @@
 md-card
 	md-card-header
 		h1.md-title Report
-		h2.md-subheading {{event.title}} - {{event.time}}
+		h2.md-subheading(v-if="event") {{event.title}} - {{event.time}}
 	
-	md-card-content
+	md-card-content(v-if="event")
 		md-list.list
-			md-list-item.md-double-line(v-for="a in attendance")
+			md-list-item.md-double-line(v-for="a in eventAttendance")
 				div.md-list-text-container
 					span {{a.member.firstName}} {{a.member.lastName}}
 					span(v-if="attended(a.member.id, 'additional')") {{a.data.additional}}
@@ -14,22 +14,22 @@ md-card
 					md-icon(v-if="attended(a.member.id, 'drink')") add_circle_outline
 					md-icon(v-if="attended(a.member.id, 'bbq')") check
 	
-		md-input-container
+		md-field
 			label Access
 			md-input(v-model="accessPrice", type="number")
 
-		md-input-container
+		md-field
 			label Non-Access
 			md-input(v-model="nonAccessPrice", type="number")
 
-		md-input-container
+		md-field
 			label Drink
 			md-input(v-model="drinkPrice", type="number")
 
-	md-card-actions
+	md-card-actions(v-if="event")
 		div.summary
 			md-icon.people-icon people
-			label {{numAttendees}}
+			label {{attendees.length}}
 
 		div.summary
 			md-icon.people-icon attach_money
@@ -42,29 +42,37 @@ md-card
 </template>
 
 <script>
+import state from '../state'
 export default {
 	name: 'event-report',
-	props: ['event', 'members', 'attendance'],
 	data () {
 		return {
 			accessPrice: 2,
 			nonAccessPrice: 7,
-			drinkPrice: 1
+			drinkPrice: 1,
+			shared: state
 		}
 	},
 	computed: {
-		numAttendees() {
-			return Object.keys(this.attendance).length;
+		event () {
+			return this.shared.events.find(e => e.id == this.$route.params.id)
+		},
+		eventAttendance () {
+			return this.shared.attendance.filter(a => a.event.id == this.$route.params.id)
+		},
+		attendees() {
+			return this.eventAttendance.map(a => this.shared.members.find(m => m.id == a.member.id)) || []
 		},
 		profit() {
 			let profit = 0;
-			for (let id in this.attendance) {
-				let isAccess = this.members[id].access != null;
+			for (let m in this.attendees) {
+				let isAccess = m.access;
+				let att = this.eventAttendance.find(a => a.member.id)
 
-				if (this.attendance[id].data['bbq']) 
+				if (att.primary) 
 					profit += (isAccess) ? this.accessPrice : this.nonAccessPrice;
 				
-				if (this.attendance[id].data['drink'])
+				if (att.secondary)
 					profit += this.drinkPrice;
 
 			}
@@ -73,30 +81,27 @@ export default {
 	},
 	methods: {
 		attended(id, field) {
-			return this.attendance[id] && this.attendance[id].data[field];
+			return this.eventAttendance.find(a => a.id == id && a[field])
 		},
 		downloadAttendees() {
 			let output = "firstName,lastName,access,bbq,drink\n";
-			for (let id in this.attendance){
-				let member = this.members[id];
-				let data = this.attendance[id].data;
-				output += [member.firstName, member.lastName, member.access, data.bbq, data.drink].join(',') + '\n';
+			for (let id in this.eventAttendance){
+				let member = this.shared.members[id];
+				let data = this.eventAttendance.find(a => a.id == member.id);
+				output += [member.firstName, member.lastName, member.access, data.primary, data.secondary].join(',') + '\n';
 			}
 
-			let attendanceIds = Object.keys(this.attendance);
-			let accessIds = attendanceIds.filter(key => this.members[key].access);
-			let nonaccessIds = attendanceIds.filter(key => !this.members[key].access);
 			output += '\n';
-			output += 'Total attendees:,' + attendanceIds.length + '\n';
+			output += 'Total attendees:,' + this.eventAttendance.length + '\n';
 			output += 'Total profit:,' + this.profit + '\n';
 
-			output += 'Access attendees:,' + accessIds.length + '\n';
-			output += 'Non-access attendees:,' + nonaccessIds.length + '\n';
+			output += 'Access attendees:,' + this.attendees.filter(m => m.access).length + '\n';
+			output += 'Non-access attendees:,' + this.attendees.filter(m => !m.access).length + '\n';
 
-			output += 'Access BBQs:,' + accessIds.filter(id => this.attendance[id].data.bbq).length + '\n';
-			output += 'Non-Access BBQs:,' + nonaccessIds.filter(id => this.attendance[id].data.bbq).length + '\n';
+			output += 'Access BBQs:,' + this.eventAttendance.filter(a => a.primary && this.attendees.find(m => m.id == a.member.id).access).length + '\n';
+			output += 'Non-Access BBQs:,' + this.eventAttendance.filter(a => a.primary && !this.attendees.find(m => m.id == a.member.id).access).length + '\n';
 
-			output += 'Drinks:,' + attendanceIds.filter(id => this.attendance[id].data.drink).length + '\n';
+			output += 'Drinks:,' + this.eventAttendance.filter(a => a.secondary).length + '\n';
 			
 			let outputBlob = new Blob([output], {type:'text/csv'});
 

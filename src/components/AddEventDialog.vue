@@ -1,37 +1,37 @@
 <template lang="pug">
-md-dialog(ref="add-event-dialog")
-	form(v-on:submit.prevent="addEvent")
-		md-dialog-title
-			h1.md-title Add Event
+md-dialog(:md-active.sync="shared.dialogs.newEvent")
+	md-dialog-title
+		h1.md-title Add Event
 
+	form(v-on:submit.prevent="addEvent")
 		md-dialog-content
-			md-input-container
+			md-field
 				label Event Title
 				md-input(v-model="title")
 
-			md-input-container
+			md-field
 				label Additional Info
 				md-input(v-model="desc")
 
-			md-input-container
-				label When is it on?
-				md-input(type="datetime", v-model="time")
+			md-datepicker(v-model="time")
 
 		md-dialog-actions
 			md-button(type="submit") Add Event
-			md-button(v-on:click="closeDialog('add-event-dialog')") Close
+			md-button(v-on:click="shared.dialogs.newEvent = false") Close
 </template>
 
 <script>
 import $http from '../http';
+import state from '../state'
 
 export default {
 	name: 'add-event-dialog',
 	data () {
 		return {
 			title: "",
-			desc: "",
-			time: ""
+			description: "",
+			time: new Date(),
+			shared: state
 		}
 	},
 	methods: {
@@ -50,13 +50,9 @@ export default {
 			//reset fields
 			this.title = "";
 			this.desc = "";
-			this.time = "";
+			this.time = new Date();
 
-			this.closeDialog('add-event-dialog');
-		},
-
-		closeDialog: function (ref) {
-			this.$refs[ref].close();
+			this.shared.dialogs.newEvent = false;
 		}
 	}
 }

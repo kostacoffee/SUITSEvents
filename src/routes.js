@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router';
+import state from './state';
 
 let view = function (name) {
 	return function(resolve) {
@@ -26,7 +27,7 @@ const routes = [
 const router = new VueRouter({routes});
 
 router.beforeEach((to, from, next) => {
-	let token = sessionStorage.getItem('token');
+	let token = state.token;
 	if (to.path == '/login') {
 		//login path is publically accessible, but if already logged in, go away
 		if (token)

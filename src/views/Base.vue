@@ -1,7 +1,7 @@
 <template lang="pug">
 div
-	md-whiteframe(md-tag="md-toolbar")
-		h1.md-title SUITS Events
+	md-toolbar.md-primary
+		h3.md-title SUITS Events
 
 	router-view.content
 </template>
@@ -9,12 +9,26 @@ div
 <script>
 import {createSocket} from '../socket';
 import $http from '../http';
+import {addAuthHeader} from '../http'
+import state from '../state'
 
 export default {
 	name: "base",
-	mounted: function() {
-		let token = sessionStorage.getItem('token');
-		initApp(token)
+	data() {
+		return {
+			shared: state
+		}
+	},
+	mounted: async function() {
+		if (this.shared.token) {
+			createSocket(this.shared.token);
+			addAuthHeader()
+			console.log("doing stuff");
+			state.events = await $http.getEventList();
+			state.members = await $http.getMembers();
+			console.log("Finished");
+		}
+
 	}
 
 }
