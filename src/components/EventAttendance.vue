@@ -7,7 +7,7 @@ div
     md-card
         md-card-content
             md-list.md-double-line
-                md-list-item(v-for="mem in filteredMembers", @click="selectMember(mem.id)")
+                md-list-item(v-for="mem in filteredMembers", @click="shared.selectedMember = mem.id")
                     div.md-list-item-text
                         span {{mem.firstName}} {{mem.lastName}}
 
@@ -32,9 +32,6 @@ export default {
     methods: {
         attended(id, field) {
             return this.shared.attendance.find(a => a.member == id && a.event == this.$route.params.id)
-        },
-        selectMember(memberId) {
-            state.selectedMember = memberId
         }
     },
     computed: {

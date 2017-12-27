@@ -2,17 +2,17 @@
 md-card
 	md-card-header
 		h1.md-title Report
-		h2.md-subheading(v-if="event") {{event.title}} - {{event.time}}
+		h2.md-subheading {{event.title}} - {{eventDate}}
 	
-	md-card-content(v-if="event")
-		md-list.list
-			md-list-item.md-double-line(v-for="a in eventAttendance")
-				div.md-list-text-container
-					span {{a.member.firstName}} {{a.member.lastName}}
-					span(v-if="attended(a.member.id, 'additional')") {{a.data.additional}}
+	md-card-content
+		md-list.list.md-double-line
+			md-list-item(v-for="a in eventAttendance", @click="shared.selectedMember = a.member.id")
+				div.md-list-item-text
+					span {{getAttendee(a.member.id).firstName}} {{getAttendee(a.member.id).lastName}}
+					span(v-if="a.additional") {{a.additional}}
 				div
-					md-icon(v-if="attended(a.member.id, 'drink')") add_circle_outline
-					md-icon(v-if="attended(a.member.id, 'bbq')") check
+					md-icon(v-if="a.secondary") local_drink
+					md-icon(v-if="a.primary") local_pizza
 	
 		md-field
 			label Access
@@ -26,7 +26,7 @@ md-card
 			label Drink
 			md-input(v-model="drinkPrice", type="number")
 
-	md-card-actions(v-if="event")
+	md-card-actions
 		div.summary
 			md-icon.people-icon people
 			label {{attendees.length}}
@@ -43,6 +43,7 @@ md-card
 
 <script>
 import state from '../state'
+import moment from 'moment'
 export default {
 	name: 'event-report',
 	data () {
@@ -77,18 +78,21 @@ export default {
 
 			}
 			return profit;
-		}
+		},
+        eventDate() {
+            return moment(this.event.time).format("MMM Do YY")
+        }
 	},
 	methods: {
-		attended(id, field) {
-			return this.eventAttendance.find(a => a.id == id && a[field])
+		getAttendee(memId) {
+			return this.attendees.find(m => m.id == memId)
 		},
 		downloadAttendees() {
-			let output = "firstName,lastName,access,bbq,drink\n";
-			for (let id in this.eventAttendance){
-				let member = this.shared.members[id];
-				let data = this.eventAttendance.find(a => a.id == member.id);
-				output += [member.firstName, member.lastName, member.access, data.primary, data.secondary].join(',') + '\n';
+			let output = "firstName,lastName,access,bbq,drink,additional\n";
+			for (let i = 0; i < this.eventAttendance.length; i++) {
+				let att = this.eventAttendance[i]
+				let member = this.attendees.find(m => m.id == att.member.id);
+				output += [member.firstName, member.lastName, member.access, att.primary, att.secondary, att.additional].join(',') + '\n';
 			}
 
 			output += '\n';
@@ -131,5 +135,8 @@ export default {
 .list
 	max-height: 60vh
 	overflow: scroll
+
+.error
+    color: #ff1744!important
 
 </style>

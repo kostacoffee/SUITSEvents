@@ -43,7 +43,7 @@ export default {
         let resp = await response($http.get(`/events/${id}`));
         if (resp == null)
             return null;
-        return resp.data;
+        return resp.data.sort((a,b) => b.time - a.time);
     },
     async getMembers() {
         let resp = await response($http.get('/members'));
@@ -68,7 +68,7 @@ export default {
             let params = new URLSearchParams();
             params.append('event', eventId);
             params.append('member', memberId);
-             await response($http.post('/attendance?'+params.toString(), data));
+            return await response($http.post('/attendance?'+params.toString(), data));
         }
         else
             return await response($http.put(att.ref, data))
@@ -83,7 +83,8 @@ export default {
     },
 
     async deleteAttendance(eventId, memId) {
-        let resp = await response($http.delete('/events/'+eventId+'/attendance/'+memId));
+        let att = state.attendance.find(a => a.member.id == memId && a.event.id == eventId);
+        let resp = await response($http.delete(att.ref));
         if (resp == null)
             return null;
         return resp;

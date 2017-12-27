@@ -1,7 +1,8 @@
 <template lang="pug">
 div
 	md-toolbar.md-primary
-		h3.md-title SUITS Events
+		h3.md-title 
+			a.title-link(href="/") SUITS Events
 
 	router-view.content
 </template>
@@ -38,5 +39,8 @@ export default {
 
 .content
 	margin: 30px!important
+
+.title-link
+	color: white !important
 
 </style>

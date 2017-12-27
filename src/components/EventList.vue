@@ -3,7 +3,7 @@ div
     md-field.event-search
         label Search
         md-input(v-model="query")
-    div.md-layout.md-gutter
+    div.md-layout
         div.md-layout-item(v-for="event in filteredEvents")
             event-card.event(:event="event", @openEvent="openEvent", @deleteEvent="")
 

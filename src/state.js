@@ -47,6 +47,9 @@ function updateResource(resource, action, data) {
 			state[resource].splice(i, 1)
 			break;
 	}
+	if (resource == "event") {
+		state[resource].sort((a,b) => b.time - a.time)
+	}
 }
 
 export default state;
