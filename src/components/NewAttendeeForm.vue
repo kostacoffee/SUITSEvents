@@ -23,6 +23,8 @@ md-card
 </template>
 
 <script>
+import http from '../http';
+
 export default {
 	name: 'new-attendee-form',
 	data () {
@@ -33,11 +35,19 @@ export default {
 		}
 	},
 	methods: {
-		submitForm() {
-			this.$emit('newAttendee', this.firstName, this.lastName, this.access)
+		async submitForm() {
+			//this.$emit('newAttendee', this.firstName, this.lastName, this.access)
+			await http.addUnregMember({
+				firstName: this.firstName,
+				lastName: this.lastName,
+				access: this.access
+			});
+
 			this.firstName = null;
 			this.lastName = null;
 			this.access = null;
+
+
 		}
 	}
 }

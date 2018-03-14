@@ -2,7 +2,7 @@ let state = {
     members: [],
     events: [],
 	attendance: [],
-	apiURL: 'http://localhost:5000',
+	apiURL: 'https://api.suits.org.au',
 	token: sessionStorage.getItem('token'),
 	dialogs: {
 		newEvent: false,
