@@ -45,7 +45,6 @@ export default {
 
             let resp;
             if (!this.attendance.primary && !this.attendance.secondary && !this.attendance.additional) {
-                console.log("MEMES")
                 resp = await $http.deleteAttendance(this.$route.params.id, this.shared.selectedMember);
             }
             else {

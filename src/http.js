@@ -84,6 +84,8 @@ export default {
 
     async deleteAttendance(eventId, memId) {
         let att = state.attendance.find(a => a.member.id == memId && a.event.id == eventId);
+        if (!att)
+            return 1; // hacky. the only check is != null so this will be fine
         let resp = await response($http.delete(att.ref));
         if (resp == null)
             return null;

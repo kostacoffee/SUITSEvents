@@ -36,11 +36,10 @@ export default {
 	},
 	methods: {
 		async submitForm() {
-			//this.$emit('newAttendee', this.firstName, this.lastName, this.access)
 			await http.addUnregMember({
 				firstName: this.firstName,
 				lastName: this.lastName,
-				access: this.access
+				access: this.access || undefined
 			});
 
 			this.firstName = null;
