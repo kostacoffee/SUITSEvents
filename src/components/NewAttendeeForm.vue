@@ -39,7 +39,7 @@ export default {
 			await http.addUnregMember({
 				firstName: this.firstName,
 				lastName: this.lastName,
-				access: this.access || undefined
+				access: parseInt(this.access) || undefined
 			});
 
 			this.firstName = null;
