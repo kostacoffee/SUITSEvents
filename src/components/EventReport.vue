@@ -49,7 +49,7 @@ export default {
 	data () {
 		return {
 			accessPrice: 2,
-			nonAccessPrice: 7,
+			nonAccessPrice: 6,
 			drinkPrice: 1,
 			shared: state
 		}
