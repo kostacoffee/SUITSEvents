@@ -43,8 +43,8 @@ export default {
                 let matches = true;
                 for (let word of query) {
                     let wordMatches = false;
-                    for (let field of ["firstName", "lastName"]) {
-                        if (mem[field] && mem[field].toLowerCase().includes(word)) {
+                    for (let field of ["firstName", "lastName", "access", "sid"]) {
+                        if (mem[field] && String(mem[field]).toLowerCase().includes(word)) {
                             wordMatches = true;
                             break;
                         }
