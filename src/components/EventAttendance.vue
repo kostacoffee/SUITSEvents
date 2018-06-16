@@ -1,8 +1,9 @@
 <template lang="pug">
 div
-    md-field.search-box
-        label Search
-        md-input(v-model="search")
+    form(@submit.prevent="autoselect")
+        md-field.search-box
+            label Search
+            md-input(v-model="search", autofocus)
     
     md-card
         md-card-content
@@ -32,7 +33,12 @@ export default {
     methods: {
         attended(id, field) {
             return this.shared.attendance.find(a => a.member == id && a.event == this.$route.params.id)
-        }
+        },
+        autoselect() {
+            if (this.filteredMembers.length == 1) {
+                this.shared.selectedMember = this.filteredMembers[0].id;
+            }
+        },
     },
     computed: {
         filteredMembers() {
