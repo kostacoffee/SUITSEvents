@@ -35,8 +35,23 @@ export default {
         }
     },
     computed: {
-         filteredMembers () {
-            let query = this.search.toLowerCase().split(/\s+/g);
+        filteredMembers() {
+            let query = this.search;
+            // is the search text numeric?
+            if (/^\d+$/.test(query)) {
+                // yup. let's check if it's a barcode
+                if (/^92(?:00|1[1-3])00\d{7}$/.test(query)) {
+                    // ACCESS card/app barcodes
+                    query = query.slice(-7);
+                } else if (/^09\d{9}\d{2}\d{2}$/.test(query)) {
+                    // SID library barcode: 09<SID><YY><CHK>
+                    query = query.slice(2, 9+2);
+                }
+                query = [query];
+            } else {
+                query = query.toLowerCase().split(/\s+/g);
+            }
+
             let filteredMembers = [];
             for (let id in this.shared.members) {
                 let mem = this.shared.members[id];
