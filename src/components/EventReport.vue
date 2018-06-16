@@ -33,7 +33,7 @@ md-card
 
 		div.summary
 			md-icon.people-icon attach_money
-			label {{profit}}
+			label {{revenue}}
 
 		md-button.md-icon-button(@click.stop="downloadAttendees")
 			md-icon file_download
@@ -64,20 +64,20 @@ export default {
 		attendees() {
 			return this.eventAttendance.map(a => this.shared.members.find(m => m.id == a.member.id)) || []
 		},
-		profit() {
-			let profit = 0;
+		revenue() {
+			let result = 0;
 			for (let m in this.attendees) {
 				let isAccess = m.access;
 				let att = this.eventAttendance.find(a => a.member.id)
 
 				if (att.primary) 
-					profit += (isAccess) ? this.accessPrice : this.nonAccessPrice;
+					result += (isAccess) ? this.accessPrice : this.nonAccessPrice;
 				
 				if (att.secondary)
-					profit += this.drinkPrice;
+					result += this.drinkPrice;
 
 			}
-			return profit;
+			return result;
 		},
         eventDate() {
             return moment(this.event.time).format("MMM Do YY")
@@ -97,7 +97,7 @@ export default {
 
 			output += '\n';
 			output += 'Total attendees:,' + this.eventAttendance.length + '\n';
-			output += 'Total profit:,' + this.profit + '\n';
+			output += 'Total revenue:,' + this.revenue + '\n';
 
 			output += 'Access attendees:,' + this.attendees.filter(m => m.access).length + '\n';
 			output += 'Non-access attendees:,' + this.attendees.filter(m => !m.access).length + '\n';
