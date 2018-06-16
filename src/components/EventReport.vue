@@ -16,15 +16,15 @@ md-card
 	
 		md-field
 			label Access
-			md-input(v-model="accessPrice", type="number")
+			md-input(v-model.number="accessPrice", type="number")
 
 		md-field
 			label Non-Access
-			md-input(v-model="nonAccessPrice", type="number")
+			md-input(v-model.number="nonAccessPrice", type="number")
 
 		md-field
 			label Drink
-			md-input(v-model="drinkPrice", type="number")
+			md-input(v-model.number="drinkPrice", type="number")
 
 	md-card-actions
 		div.summary
