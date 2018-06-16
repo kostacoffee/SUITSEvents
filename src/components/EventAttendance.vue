@@ -77,9 +77,12 @@ export default {
                 }
                 if (matches) {
                     filteredMembers.push(mem);
+                    // limit number of results to reduce render time
+                    if (filteredMembers.length == 10) {
+                        break;
+                    }
                 }
             }
-            filteredMembers = filteredMembers.slice(0,10); // only show first 10 to minimise rendering times
             return filteredMembers;
         },
     }
