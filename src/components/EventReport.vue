@@ -66,7 +66,7 @@ export default {
 		},
 		revenue() {
 			let result = 0;
-			for (let m in this.attendees) {
+			for (let m of this.attendees) {
 				let isAccess = m.access;
 				let att = this.eventAttendance.find(a => a.member.id)
 
