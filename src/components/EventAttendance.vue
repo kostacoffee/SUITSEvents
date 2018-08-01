@@ -3,7 +3,7 @@ div
     form(@submit.prevent="autoselect")
         md-field.search-box
             label Search
-            md-input(v-model="search", autofocus)
+            md-input(v-model="search", autocomplete="off", autofocus)
     
     md-card
         md-card-content
