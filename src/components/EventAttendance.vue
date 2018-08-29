@@ -36,12 +36,25 @@ export default {
     },
     computed: {
          filteredMembers () {
-            let query = this.search.toLowerCase();
+            let query = this.search.toLowerCase().split(/\s+/g);
             let filteredMembers = [];
             for (let id in this.shared.members) {
                 let mem = this.shared.members[id];
-                if ((mem.firstName && mem.firstName.toLowerCase().includes(query)) ||
-                    (mem.lastName && mem.lastName.toLowerCase().includes(query))) {
+                let matches = true;
+                for (let word of query) {
+                    let wordMatches = false;
+                    for (let field of ["firstName", "lastName"]) {
+                        if (mem[field] && mem[field].toLowerCase().includes(word)) {
+                            wordMatches = true;
+                            break;
+                        }
+                    }
+                    if (!wordMatches) {
+                        matches = false;
+                        break;
+                    }
+                }
+                if (matches) {
                     filteredMembers.push(mem);
                 }
             }
