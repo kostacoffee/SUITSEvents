@@ -102,8 +102,8 @@ export default {
 			output += 'Access attendees:,' + this.attendees.filter(m => m.access).length + '\n';
 			output += 'Non-access attendees:,' + this.attendees.filter(m => !m.access).length + '\n';
 
-			output += 'Access BBQs:,' + this.eventAttendance.filter(a => a.primary && this.attendees.find(m => m.id == a.member.id).access).length + '\n';
-			output += 'Non-Access BBQs:,' + this.eventAttendance.filter(a => a.primary && !this.attendees.find(m => m.id == a.member.id).access).length + '\n';
+			output += 'Access foods:,' + this.eventAttendance.filter(a => a.primary && this.attendees.find(m => m.id == a.member.id).access).length + '\n';
+			output += 'Non-Access foods:,' + this.eventAttendance.filter(a => a.primary && !this.attendees.find(m => m.id == a.member.id).access).length + '\n';
 
 			output += 'Drinks:,' + this.eventAttendance.filter(a => a.secondary).length + '\n';
 			

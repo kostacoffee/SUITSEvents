@@ -9,7 +9,7 @@ md-card
         
         md-card-content(v-if="shared.selectedMember")
 
-                md-checkbox(v-model="attendance.primary") BBQ
+                md-checkbox(v-model="attendance.primary") Food
                 md-checkbox(v-model="attendance.secondary") Drink
 
                 md-field
