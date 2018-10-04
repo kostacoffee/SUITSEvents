@@ -16,15 +16,15 @@ md-card
 	
 		md-field
 			label Access
-			md-input(v-model="accessPrice", type="number")
+			md-input(v-model.number="accessPrice", type="number")
 
 		md-field
 			label Non-Access
-			md-input(v-model="nonAccessPrice", type="number")
+			md-input(v-model.number="nonAccessPrice", type="number")
 
 		md-field
 			label Drink
-			md-input(v-model="drinkPrice", type="number")
+			md-input(v-model.number="drinkPrice", type="number")
 
 	md-card-actions
 		div.summary
@@ -33,7 +33,7 @@ md-card
 
 		div.summary
 			md-icon.people-icon attach_money
-			label {{profit}}
+			label {{revenue}}
 
 		md-button.md-icon-button(@click.stop="downloadAttendees")
 			md-icon file_download
@@ -49,7 +49,7 @@ export default {
 	data () {
 		return {
 			accessPrice: 2,
-			nonAccessPrice: 7,
+			nonAccessPrice: 6,
 			drinkPrice: 1,
 			shared: state
 		}
@@ -64,20 +64,20 @@ export default {
 		attendees() {
 			return this.eventAttendance.map(a => this.shared.members.find(m => m.id == a.member.id)) || []
 		},
-		profit() {
-			let profit = 0;
-			for (let m in this.attendees) {
+		revenue() {
+			let result = 0;
+			for (let m of this.attendees) {
 				let isAccess = m.access;
 				let att = this.eventAttendance.find(a => a.member.id)
 
 				if (att.primary) 
-					profit += (isAccess) ? this.accessPrice : this.nonAccessPrice;
+					result += (isAccess) ? this.accessPrice : this.nonAccessPrice;
 				
 				if (att.secondary)
-					profit += this.drinkPrice;
+					result += this.drinkPrice;
 
 			}
-			return profit;
+			return result;
 		},
         eventDate() {
             return moment(this.event.time).format("MMM Do YY")
@@ -97,7 +97,7 @@ export default {
 
 			output += '\n';
 			output += 'Total attendees:,' + this.eventAttendance.length + '\n';
-			output += 'Total profit:,' + this.profit + '\n';
+			output += 'Total revenue:,' + this.revenue + '\n';
 
 			output += 'Access attendees:,' + this.attendees.filter(m => m.access).length + '\n';
 			output += 'Non-access attendees:,' + this.attendees.filter(m => !m.access).length + '\n';
